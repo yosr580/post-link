@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operation Mentor — Classified Agent Files · Talan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     TOKENS — crystalline / neon signal-room identity.
+     Signature element: the crystal-cut corner (all panels & cards
+     have two opposing corners sheared off, like cut glass).
+     ============================================================ */
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+
+  :root{
+    --void:#04060D; --void-2:#090E1C; --panel-solid:#0D1326;
+    --line:rgba(140,170,255,.16); --line-strong:rgba(150,180,255,.36);
+
+    --cyan:#4FF3FF; --cyan-dim:rgba(79,243,255,.30);
+    --violet:#A26BFF; --violet-dim:rgba(162,107,255,.30);
+    --magenta:#FF3F9E; --magenta-dim:rgba(255,63,158,.30);
+    --success:#57F0B0; --danger:#FF4D6D;
+
+    --ink:#EAF1FF; --text-dim:#8892BE; --text-faint:#5A6390;
+
+    --gradient-neon:linear-gradient(120deg,var(--cyan),var(--violet) 52%,var(--magenta));
+    --gradient-panel:linear-gradient(165deg, rgba(24,30,54,.92), rgba(7,10,20,.90));
+    --gradient-hero:
+      radial-gradient(circle at 8% 0%, var(--cyan-dim) 0%, transparent 40%),
+      radial-gradient(circle at 96% 12%, var(--violet-dim) 0%, transparent 42%),
+      radial-gradient(circle at 45% 100%, var(--magenta-dim) 0%, transparent 44%);
+
+    --cut:22px;
+    --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+    --space-5:20px; --space-6:24px; --space-7:28px; --space-8:32px;
+
+    --shadow-soft:0 12px 30px -16px rgba(79,243,255,.35);
+    --shadow-medium:0 24px 50px -26px rgba(0,0,0,.65);
+    --shadow-strong:0 34px 70px -22px rgba(0,0,0,.75);
+
+    --ease-spring:cubic-bezier(.4,0,.2,1);
+
+    --display:'Space Grotesk',system-ui,sans-serif;
+    --label:'Rajdhani',system-ui,sans-serif;
+    --body:'Inter',system-ui,sans-serif;
+    --mono:'IBM Plex Mono',monospace;
+  }
+
+  /* crystal-cut clip: two opposing corners sheared off */
+  .cut{ clip-path:polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut)); }
+
+  body{
+    background:
+      radial-gradient(circle at 8% 0%, var(--cyan-dim) 0%, transparent 38%),
+      radial-gradient(circle at 96% 14%, var(--violet-dim) 0%, transparent 40%),
+      radial-gradient(circle at 45% 102%, var(--magenta-dim) 0%, transparent 44%),
+      repeating-linear-gradient(115deg, rgba(255,255,255,.028) 0 1.5px, transparent 1.5px 58px),
+      var(--void);
+    background-size:200% 200%,200% 200%,200% 200%,100% 100%,100% 100%;
+    animation:meshDrift 70s ease-in-out infinite;
+    color:var(--ink); font-family:var(--body); min-height:100vh; padding:26px 14px 60px;
+    position:relative; overflow-x:hidden;
+  }
+  @keyframes meshDrift{
+    0%{background-position:0% 0%,100% 12%,45% 100%,0 0,0 0;}
+    50%{background-position:12% 6%,88% 4%,52% 92%,0 0,0 0;}
+    100%{background-position:0% 0%,100% 12%,45% 100%,0 0,0 0;}
+  }
+  #app{max-width:820px; margin:0 auto; position:relative; z-index:2;}
+  .screen{display:none; animation:fadeIn .4s ease;}
+  .screen.active{display:block;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+
+  .hero-card{background:var(--gradient-panel); border:1.5px solid var(--line-strong); padding:32px 26px; position:relative; box-shadow:var(--shadow-medium); --cut:26px;}
+  .hero-card::before{content:""; position:absolute; inset:0; background:var(--gradient-hero); opacity:.5; pointer-events:none;}
+  .stat-row{display:flex; gap:18px; margin-top:20px; flex-wrap:wrap; position:relative;}
+  .stat{font-family:var(--mono); font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.06em;}
+  .stat b{background:var(--gradient-neon); background-clip:text; -webkit-background-clip:text; color:transparent; -webkit-text-fill-color:transparent; font-size:17px; display:block; font-family:var(--display);}
+
+  /* ============================================================
+     TYPOGRAPHY
+     ============================================================ */
+  a{color:var(--cyan);}
+  .eyebrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase; margin:0 0 10px; font-weight:600;
+    display:inline-flex; align-items:center; gap:9px; color:var(--text-dim);
+  }
+  .eyebrow::before{content:""; width:9px; height:9px; background:var(--gradient-neon); clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%); box-shadow:0 0 10px var(--cyan);}
+  h1{font-family:var(--display); font-weight:800; font-size:clamp(27px,6vw,42px); line-height:1.08; margin:0 0 12px; letter-spacing:-.01em;
+    background:var(--gradient-neon); background-size:200% auto; background-clip:text; -webkit-background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
+    animation:textShimmer 7s ease-in-out infinite alternate;
+  }
+  @keyframes textShimmer{ from{background-position:0% center;} to{background-position:100% center;} }
+  .lede{color:var(--text-dim); font-size:15.5px; line-height:1.65; max-width:60ch; margin:0 0 22px; position:relative;}
+
+  /* ============================================================
+     BUTTONS
+     ============================================================ */
+  .btn{font-family:var(--label); font-weight:700; font-size:14.5px; letter-spacing:.03em; text-transform:uppercase; border:none; --cut:9px; padding:13px 22px; cursor:pointer; transition:transform .15s var(--ease-spring), box-shadow .2s var(--ease-spring), filter .2s; display:inline-flex; align-items:center; gap:8px;}
+  .btn:active{transform:scale(.97);}
+  .btn-primary{background:var(--gradient-neon); color:#03050C; box-shadow:0 0 0 1px rgba(255,255,255,.08) inset, 0 10px 26px -10px rgba(79,243,255,.55);}
+  .btn-primary:hover{transform:translateY(-2px); filter:brightness(1.08); box-shadow:0 0 0 1px rgba(255,255,255,.12) inset, 0 0 32px -4px rgba(162,107,255,.7);}
+  .btn-ghost{background:rgba(255,255,255,.03); color:var(--ink); border:1.5px solid var(--line-strong);}
+  .btn-ghost:hover{border-color:var(--cyan); box-shadow:0 0 18px -6px var(--cyan-dim);}
+  .btn:disabled{opacity:.35; cursor:not-allowed; box-shadow:none;}
+  .btn:focus-visible, a:focus-visible, input:focus-visible, .flip-card:focus-visible{
+    outline:2.5px solid var(--cyan); outline-offset:3px;
+  }
+
+  /* ============================================================
+     AMBIENT FLYING SHARDS (background decor — no emoji)
+     ============================================================ */
+  #decor{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
+  #decor span{position:absolute; width:12px; height:12px; opacity:.4; clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
+    background:var(--gradient-neon); filter:drop-shadow(0 0 8px var(--violet)); animation:shardFly 16s ease-in-out infinite;}
+  #decor span:nth-child(1){top:8%; left:4%; animation-delay:0s; width:10px; height:10px;}
+  #decor span:nth-child(2){top:16%; right:6%; animation-delay:2.1s; width:16px; height:16px;}
+  #decor span:nth-child(3){bottom:14%; left:7%; animation-delay:4.4s;}
+  #decor span:nth-child(4){bottom:26%; right:5%; animation-delay:1.2s; width:14px; height:14px;}
+  #decor span:nth-child(5){top:46%; left:2%; animation-delay:3.4s; width:8px; height:8px;}
+  #decor span:nth-child(6){top:64%; right:3%; animation-delay:5.2s;}
+  #decor span:nth-child(7){top:32%; left:50%; animation-delay:2.8s; width:9px; height:9px;}
+  #decor span:nth-child(8){bottom:6%; left:44%; animation-delay:.8s; width:11px; height:11px;}
+  @keyframes shardFly{
+    0%,100%{transform:translate(0,0) rotate(0deg);}
+    25%{transform:translate(24px,-30px) rotate(90deg);}
+    50%{transform:translate(-16px,-54px) rotate(180deg);}
+    75%{transform:translate(-30px,-14px) rotate(270deg);}
+  }
+  #flash{position:fixed; inset:0; background:var(--cyan); opacity:0; pointer-events:none; z-index:999; mix-blend-mode:screen;}
+  #flash.pop{animation:flashPop .5s ease;}
+  @keyframes flashPop{0%{opacity:0;}12%{opacity:.55;}100%{opacity:0;}}
+
+  /* ============================================================
+     SHAPE ICONS
+     ============================================================ */
+  .shape-icon{display:inline-block; color:var(--tint,var(--cyan)); filter:drop-shadow(0 0 9px currentColor);}
+  .shape-icon svg{width:100%; height:100%; display:block;}
+
+  /* ============================================================
+     FLIP CARDS — floating, flying, crystal-cut, neon
+     ============================================================ */
+  .roster{display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr)); gap:26px; margin-top:22px; justify-items:center;}
+  @media (min-width:560px){.roster{grid-template-columns:repeat(3,1fr);}}
+  #people-roster{grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; max-width:620px; margin:30px auto 0;}
+  @media (min-width:560px){#people-roster{grid-template-columns:repeat(3,minmax(0,1fr));}}
+  .agent-gallery{max-width:185px; aspect-ratio:1/1.15;}
+  .agent-gallery .avatar-hex{width:112px!important; height:112px!important; margin:0; clip-path:none; border-radius:50%; border:2px solid color-mix(in srgb,var(--tint,var(--cyan)) 75%,white); box-shadow:0 0 0 3px color-mix(in srgb,var(--tint,var(--cyan)) 9%,transparent), 0 0 12px color-mix(in srgb,var(--tint,var(--cyan)) 42%,transparent); filter:none; transition:transform .25s var(--ease-spring), box-shadow .25s ease;}
+  .agent-gallery .avatar-hex::after{content:""; position:absolute; inset:-5px; border-radius:50%; border:1px solid color-mix(in srgb,var(--tint,var(--cyan)) 28%,transparent); box-shadow:0 0 9px color-mix(in srgb,var(--tint,var(--cyan)) 35%,transparent); animation:portraitPulse 3.2s ease-in-out infinite; pointer-events:none;}
+  .agent-gallery:hover .avatar-hex{transform:scale(1.05); box-shadow:0 0 0 5px color-mix(in srgb,var(--tint,var(--cyan)) 13%,transparent), 0 0 18px color-mix(in srgb,var(--tint,var(--cyan)) 55%,transparent);}
+  @keyframes portraitPulse{0%,100%{transform:scale(.98);opacity:.35;}50%{transform:scale(1.04);opacity:.65;}}
+  .agent-gallery .card-front{padding:16px;}
+
+  .flip-card{
+    perspective:1400px; width:100%; max-width:230px; aspect-ratio:3/4; cursor:pointer; position:relative;
+    animation:floatCard var(--fdur,9s) ease-in-out infinite; animation-delay:var(--fdelay,0s);
+  }
+  .flip-card.locked{cursor:not-allowed;}
+  .flip-card.flipped, .flip-card.hovering{animation-play-state:paused;}
+  @keyframes floatCard{
+    0%,100%{ transform:translate3d(0,0,0) rotate(0deg); }
+    25%{ transform:translate3d(var(--fx),calc(var(--fy) * -1),0) rotate(var(--fr)); }
+    50%{ transform:translate3d(calc(var(--fx) * -1),var(--fy),0) rotate(calc(var(--fr) * -1)); }
+    75%{ transform:translate3d(calc(var(--fx) * .5),calc(var(--fy) * -.5),0) rotate(calc(var(--fr) * .4)); }
+  }
+  .flip-card::before{
+    content:""; position:absolute; left:10%; right:10%; bottom:-8px; height:14px; border-radius:50%;
+    background:radial-gradient(ellipse at center, rgba(0,0,0,.5), transparent 70%); filter:blur(3px); opacity:.35; z-index:-1;
+  }
+  .card-inner{position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .5s var(--ease-spring);}
+  .flip-card.flipped .card-inner{transform:rotateY(180deg) !important;}
+
+  .card-front,.card-back{
+    --cut:18px;
+    position:absolute; width:100%; height:100%; backface-visibility:hidden;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; text-align:center;
+    clip-path:polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+  }
+  .card-front{
+    background:var(--gradient-panel); border:1.5px solid var(--line-strong);
+    transition:filter .25s ease, border-color .25s ease;
+  }
+  .card-front::before{
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(circle at var(--gx,50%) var(--gy,50%), color-mix(in srgb, var(--tint,var(--cyan)) 40%, transparent), transparent 62%);
+    opacity:0; transition:opacity .25s ease; pointer-events:none;
+  }
+  .flip-card.hovering .card-front::before{opacity:1;}
+  .flip-card.hovering .card-front{border-color:var(--tint,var(--cyan)); filter:drop-shadow(0 0 20px var(--tint,var(--cyan)));}
+  .card-scan{position:absolute; left:8%; right:8%; height:2px; top:6%;
+    background:linear-gradient(90deg,transparent,var(--tint,var(--cyan)),transparent);
+    opacity:.55; animation:scanMove 3.4s linear infinite; filter:drop-shadow(0 0 6px var(--tint,var(--cyan)));}
+  @keyframes scanMove{0%{top:6%;} 100%{top:90%;}}
+
+  .avatar-hex{width:58px; height:58px; margin-bottom:10px; position:relative; z-index:1;
+    clip-path:polygon(25% 6%,75% 6%,100% 50%,75% 94%,25% 94%,0 50%);
+    border:2px solid var(--tint,var(--cyan)); background:var(--void-2); overflow:hidden; box-shadow:0 0 16px -2px var(--tint,var(--cyan));}
+  .avatar-hex img{width:100%; height:100%; object-fit:cover; display:block;}
+  .avatar-fallback{width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:700; font-size:15px; color:var(--tint,var(--cyan));}
+
+  .front-label{font-family:var(--label); font-weight:700; font-size:15px; letter-spacing:.02em; margin:6px 0 3px; color:var(--ink); position:relative; z-index:1;}
+  .front-sub{font-family:var(--mono); font-size:10px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.12em; margin:0; position:relative; z-index:1;}
+
+  .card-back{
+    background:linear-gradient(165deg, color-mix(in srgb, var(--tint,var(--cyan)) 22%, var(--panel-solid)), var(--panel-solid));
+    border:1.5px solid var(--tint,var(--cyan)); transform:rotateY(180deg); box-shadow:0 0 30px -8px var(--tint,var(--cyan)) inset;
+  }
+  .back-title{font-family:var(--display); font-weight:700; font-size:16px; color:var(--ink); margin:0 0 6px; line-height:1.25;}
+  .back-sub{font-family:var(--mono); font-size:10.5px; color:var(--text-dim); line-height:1.6; margin:0 0 14px;}
+  .back-sub .school-line{margin:0 0 4px; font-size:10px;}
+  .back-sub .linkedin-chip{display:inline-block; color:var(--cyan); text-decoration:none; border-bottom:1px dotted var(--cyan); font-size:10px;}
+  .mastered-tag{position:absolute; top:8px; right:10px; font-family:var(--mono); font-size:9px; letter-spacing:.08em; color:var(--success); text-transform:uppercase;}
+  .back-actions{display:flex; flex-direction:column; gap:8px; width:100%;}
+  .btn-confirm,.btn-return{
+    font-family:var(--label); font-weight:700; font-size:12px; letter-spacing:.06em; text-transform:uppercase; border:none; cursor:pointer;
+    padding:10px 12px; clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px);
+    transition:transform .15s var(--ease-spring), filter .2s;
+  }
+  .btn-confirm{background:var(--gradient-neon); color:#03050C;}
+  .btn-confirm:hover{filter:brightness(1.1); transform:translateY(-1px);}
+  .btn-return{background:transparent; border:1.5px solid var(--line-strong); color:var(--text-dim);}
+  .btn-return:hover{border-color:var(--danger); color:var(--danger);}
+
+  .flip-card.locked .card-front{opacity:.55; filter:grayscale(1);}
+  .flip-card.locked .card-front::after{
+    content:""; position:absolute; inset:0; background:repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 6px, transparent 6px 12px);
+  }
+
+  /* ============================================================
+     TRAIL / ENERGY
+     ============================================================ */
+  .trail{display:flex; align-items:center; justify-content:space-between; margin:20px 0 20px; position:relative;}
+  .trail::before{content:""; position:absolute; top:15px; left:14px; right:14px; height:2px; background:repeating-linear-gradient(90deg,var(--line) 0 6px, transparent 6px 12px); z-index:0;}
+  .node{width:32px; height:32px; clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%); background:var(--panel-solid); border:2px solid var(--line-strong); display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:12px; color:var(--text-dim); z-index:1; transition:all .2s;}
+  .node.done{background:var(--success); border-color:var(--success); color:#03130C; font-weight:700; box-shadow:0 0 12px -2px var(--success);}
+  .node.fail{background:var(--danger); border-color:var(--danger); color:#1A0308; font-weight:700; box-shadow:0 0 12px -2px var(--danger);}
+  .node.current{border-color:var(--cyan); box-shadow:0 0 0 4px var(--cyan-dim);}
+
+  .energy{display:flex; gap:6px; margin-bottom:6px; justify-content:center;}
+  .power-pip{width:16px; height:16px; clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%); background:var(--line-strong); transition:all .2s;}
+  .power-pip.active{background:var(--gradient-neon); box-shadow:0 0 10px var(--cyan);}
+  .power-pip.spent{opacity:.22;}
+
+  /* ============================================================
+     QUESTION CARD
+     ============================================================ */
+  .q-card{background:var(--gradient-panel); --cut:20px; padding:22px 20px; border:1.5px solid var(--line-strong); box-shadow:var(--shadow-medium);}
+  .q-week{font-family:var(--mono); font-size:11px; color:var(--cyan); text-transform:uppercase; letter-spacing:.14em; margin:0 0 8px; font-weight:600;}
+  .q-text{font-family:var(--display); font-weight:700; font-size:18.5px; line-height:1.35; margin:0 0 16px; color:var(--ink);}
+  .opt{display:block; width:100%; text-align:left; background:rgba(255,255,255,.03); border:1.5px solid var(--line); color:var(--ink); --cut:10px; clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut)); padding:12px 15px; margin-bottom:9px; font-family:var(--body); font-size:14px; cursor:pointer; transition:all .15s;}
+  .opt:hover:not(:disabled){border-color:var(--cyan); background:rgba(79,243,255,.06); box-shadow:0 0 16px -8px var(--cyan);}
+  .opt.correct{background:rgba(87,240,176,.12); border-color:var(--success); color:var(--success); font-weight:600;}
+  .opt.wrong{background:rgba(255,77,109,.12); border-color:var(--danger); color:var(--danger); font-weight:600;}
+  .opt:disabled{cursor:default;}
+  .feedback{font-family:var(--mono); font-size:12.5px; color:var(--text-dim); margin-top:8px; min-height:20px; line-height:1.6; text-transform:uppercase; letter-spacing:.02em;}
+
+  /* ============================================================
+     END SCREEN
+     ============================================================ */
+  .idbadge-wrap{display:flex; justify-content:center; margin:16px 0 20px; position:relative;}
+  .idbadge{width:250px; background:var(--gradient-panel); --cut:16px; border:1.5px solid var(--line-strong); box-shadow:var(--shadow-strong); overflow:hidden; position:relative;}
+  .idbadge-top{background:var(--void-2); padding:10px 14px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line);}
+  .idbadge-top span{font-family:var(--mono); font-size:9.5px; color:var(--text-dim); letter-spacing:.1em; text-transform:uppercase;}
+  .idbadge-photo-wrap{padding:20px 0 8px; display:flex; justify-content:center;}
+  .idbadge-body{padding:0 16px 18px; text-align:center;}
+  .idbadge-name{font-family:var(--display); font-weight:700; font-size:16px; color:var(--ink); margin:6px 0 2px;}
+  .idbadge-track{font-family:var(--mono); font-size:10.5px; color:var(--cyan); text-transform:uppercase; letter-spacing:.08em;}
+
+  .reveal-card{background:var(--gradient-panel); --cut:22px; padding:24px 20px; text-align:center; border:1.5px solid var(--line-strong); box-shadow:var(--shadow-medium);}
+  .badge-pill{display:inline-block; font-family:var(--mono); font-size:11px; padding:5px 14px; --cut:8px; clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut)); background:rgba(79,243,255,.1); border:1px solid var(--cyan); color:var(--cyan); margin-bottom:8px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;}
+  .score-big{font-family:var(--display); font-weight:800; font-size:40px; margin:4px 0; background:var(--gradient-neon); background-clip:text; -webkit-background-clip:text; color:transparent; -webkit-text-fill-color:transparent;}
+
+  .reveal-seq > *{opacity:0; transform:translateY(10px); animation:seqIn .5s var(--ease-spring) forwards;}
+  .reveal-seq .badge-pill{animation-delay:.05s;}
+  .reveal-seq .idbadge-wrap{animation-delay:.18s;}
+  .reveal-seq .score-big{animation-delay:.4s;}
+  .reveal-seq .grade-text{animation-delay:.55s;}
+  @keyframes seqIn{ to{opacity:1; transform:translateY(0);} }
+
+  .idbadge.verified{animation:verifiedPulse 1.8s ease-in-out 3;}
+  @keyframes verifiedPulse{
+    0%,100%{box-shadow:var(--shadow-strong), 0 0 0 0 rgba(87,240,176,.5);}
+    50%{box-shadow:var(--shadow-strong), 0 0 0 8px rgba(87,240,176,0);}
+  }
+  .idbadge.sealed{animation:sealedPulse 1.8s ease-in-out 2;}
+  @keyframes sealedPulse{
+    0%,100%{box-shadow:var(--shadow-strong), 0 0 0 0 rgba(255,63,158,.4);}
+    50%{box-shadow:var(--shadow-strong), 0 0 0 7px rgba(255,63,158,0);}
+  }
+  #idbadge-status.flash-highlight{ animation:statusFlash .8s ease .3s 1 both; }
+  @keyframes statusFlash{ 0%{color:var(--text-dim);} 40%{color:var(--success); text-shadow:0 0 10px var(--success);} 100%{color:var(--text-dim);} }
+  #idbadge-status.glitch-flicker{ animation:glitchFlicker 1.1s steps(2,end) .2s 2 both; }
+  @keyframes glitchFlicker{ 0%,100%{opacity:1;} 20%{opacity:.3;} 40%{opacity:1;} 60%{opacity:.4;} 80%{opacity:1;} }
+
+  .confetti-burst{position:absolute; inset:0; pointer-events:none; overflow:visible;}
+  .confetti-piece{position:absolute; top:50%; left:50%; width:10px; height:10px; opacity:0; clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%); animation:confettiFly .9s ease-out forwards;}
+  @keyframes confettiFly{
+    0%{opacity:1; transform:translate(-50%,-50%) scale(.6) rotate(0deg);}
+    100%{opacity:0; transform:translate(var(--dx),var(--dy)) scale(1) rotate(var(--rot));}
+  }
+
+  .info-grid{display:grid; grid-template-columns:1fr; gap:8px; text-align:left; margin:16px 0;}
+  .info-row{background:rgba(255,255,255,.03); --cut:8px; clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut)); border:1px solid var(--line); padding:11px 13px; font-size:13px; display:flex; gap:10px; align-items:flex-start; opacity:0; transform:translateX(-8px); animation:rowIn .4s var(--ease-spring) forwards;}
+  @keyframes rowIn{ to{opacity:1; transform:translateX(0);} }
+  .info-row .k{font-family:var(--mono); font-size:10px; color:var(--cyan); text-transform:uppercase; letter-spacing:.06em; min-width:82px; padding-top:1px;}
+  .info-row .v{color:var(--ink); line-height:1.5; flex:1;}
+  .info-row a{font-weight:600;}
+
+  .share-box{background:var(--void-2); color:var(--text-dim); --cut:10px; clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut)); border:1px solid var(--line); padding:14px; font-family:var(--mono); font-size:12.5px; margin:14px 0; text-align:left; white-space:pre-wrap; line-height:1.7; opacity:0; animation:seqIn .5s var(--ease-spring) forwards; animation-delay:.9s;}
+  #lead-capture{opacity:0; animation:seqIn .5s var(--ease-spring) forwards; animation-delay:.75s;}
+  .row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:12px;}
+  input.nick{font-family:var(--mono); background:rgba(255,255,255,.03); border:1.5px solid var(--line); --cut:8px; clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut)); padding:11px 14px; color:var(--ink); font-size:13.5px; width:100%; margin:10px 0; transition:border-color .2s, box-shadow .2s;}
+  input.nick::placeholder{color:var(--text-faint);}
+  input.nick:focus{border-color:var(--cyan); box-shadow:0 0 0 3px var(--cyan-dim); outline:none;}
+  #lead-form{margin:16px 0; text-align:left;}
+  #lead-form label{display:block; font-family:var(--label); font-size:13px; line-height:1.45; color:var(--ink); font-weight:700; text-transform:uppercase; letter-spacing:.03em;}
+
+  /* ============================================================
+     LEADERBOARD
+     ============================================================ */
+  .board{margin-top:22px;}
+  .board h3{font-family:var(--label); font-size:14.5px; margin:0 0 10px; color:var(--ink); font-weight:700; text-transform:uppercase; letter-spacing:.06em;}
+  .board-row{display:flex; justify-content:space-between; font-family:var(--mono); font-size:12.5px; padding:8px 12px; background:rgba(255,255,255,.02); border:1px solid var(--line); --cut:6px; clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut)); margin-bottom:6px; color:var(--text-dim); transition:box-shadow .2s, transform .2s;}
+  .board-row:hover{box-shadow:0 0 14px -8px var(--cyan); transform:translateX(2px);}
+  .board-row b{color:var(--cyan);}
+
+  .note{font-size:12px; color:var(--text-dim); margin-top:20px; line-height:1.6; text-align:center;}
+  .footer-tag{font-family:var(--mono); font-size:10.5px; color:var(--text-faint); text-align:center; margin-top:28px; opacity:.7; line-height:1.6;}
+
+  /* ============================================================
+     EASTER EGG MODAL
+     ============================================================ */
+  #egg-overlay{position:fixed; inset:0; background:rgba(4,6,13,.75); backdrop-filter:blur(3px); display:none; align-items:center; justify-content:center; z-index:998; padding:16px;}
+  #egg-overlay.show{display:flex;}
+  .egg-modal{background:var(--gradient-panel); --cut:18px; padding:28px 22px; max-width:360px; text-align:center; border:1.5px solid var(--cyan); box-shadow:var(--shadow-strong), 0 0 40px -10px var(--cyan-dim); animation:eggPop .4s ease;}
+  @keyframes eggPop{from{transform:scale(.85); opacity:0;} to{transform:scale(1); opacity:1;}}
+  .egg-modal .icon{width:44px; height:44px; margin:0 auto 10px;}
+  .egg-modal h2{font-family:var(--display); font-size:20px; margin:0 0 8px; color:var(--ink);}
+  .egg-modal p{font-size:13.5px; color:var(--text-dim); line-height:1.6; margin:0 0 16px;}
+  .egg-gift{background:rgba(79,243,255,.08); border:1px solid var(--line); --cut:8px; clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut)); padding:12px 14px; font-size:13.5px; color:var(--ink); font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:10px; text-align:left;}
+
+  /* ============================================================
+     RESPONSIVE / MOTION
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms !important; transition-duration:.01ms !important; animation-iteration-count:1 !important;}
+    body{animation:none;}
+    .eyebrow::before,h1{animation:none;}
+    .flip-card{animation:none;}
+    .reveal-seq > *{opacity:1; transform:none;}
+    .info-row{opacity:1; transform:none;}
+    .share-box,#lead-capture{opacity:1;}
+    .confetti-burst{display:none;}
+    .idbadge.verified,.idbadge.sealed{animation:none;}
+  }
+</style>
+</head>
+<body>
+<div id="decor" aria-hidden="true">
+  <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+<div id="flash"></div>
+<div id="egg-overlay"><div class="egg-modal" id="egg-modal-content"></div></div>
+<div id="app">
+
+  <!-- PEOPLE LANDING -->
+  <section class="screen active" id="screen-people">
+    <p class="eyebrow">Classified Agent Bureau · Community Special Edition</p>
+    <h1>Whose project do you want to uncover?</h1>
+    <p class="lede">Select an agent file, then guess which project is really theirs. Answer five questions to prove it.</p>
+    <div class="roster" id="people-roster"></div>
+    <p class="note">Clear 3 classified cases and a mystery drop unlocks. <span id="tries-left"></span></p>
+    <div id="board-people"></div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="screen" id="screen-projects">
+    <p class="eyebrow">Mission 01: Identify the operation</p>
+    <h1 id="projects-heading">Which project do you think this person built?</h1>
+    <p class="lede">Tap a card to inspect it, then confirm the mission or put it back and keep looking.</p>
+    <div class="roster" id="projects-grid"></div>
+    <div class="row"><button class="btn btn-ghost" id="btn-back-people">← Switch person</button></div>
+  </section>
+
+  <!-- GAME -->
+  <section class="screen" id="screen-game">
+    <p class="eyebrow" id="game-track-label">Mission briefing</p>
+    <div class="trail" id="trail"></div>
+    <div class="energy" id="energy"></div>
+    <div class="q-card">
+      <p class="q-week" id="q-week">Week 1</p>
+      <p class="q-text" id="q-text"></p>
+      <div id="options"></div>
+      <p class="feedback" id="feedback"></p>
+    </div>
+  </section>
+
+  <!-- END -->
+  <section class="screen" id="screen-end">
+    <p class="eyebrow">Mission debrief</p>
+    <div class="reveal-card reveal-seq">
+      <span class="badge-pill" id="end-badge">Result</span>
+      <div class="idbadge-wrap">
+        <div class="idbadge">
+          <div class="idbadge-top"><span>Classified Agent File</span><span id="idbadge-status">●●●●●</span></div>
+          <div class="idbadge-photo-wrap"><div class="avatar-row" id="end-avatar-row" style="display:flex; gap:6px; justify-content:center;"></div></div>
+          <div class="idbadge-body">
+            <p class="idbadge-name" id="idbadge-name">???</p>
+            <p class="idbadge-track" id="idbadge-track">Operation</p>
+          </div>
+        </div>
+        <div class="confetti-burst" id="confetti-burst"></div>
+      </div>
+      <div class="score-big" id="score-big">0</div>
+      <p class="note grade-text" style="margin-top:0;" id="grade-text"></p>
+
+      <div id="reveal-unlocked" style="display:none;">
+        <p class="lede" id="project-desc" style="margin:12px auto 0; text-align:center;"></p>
+        <div class="info-grid" id="info-grid"></div>
+      </div>
+      <div id="reveal-locked" style="display:none;">
+        <p class="lede" style="margin:12px auto 0; text-align:center;">This case stays classified. You needed at least <b>4 correct answers out of 5</b>. Try another mission.</p>
+      </div>
+      <div id="lead-capture"></div>
+
+      <div class="share-box" id="share-box"></div>
+      <input class="nick" id="nick" placeholder="Your agent alias for the leaderboard (optional)" maxlength="20">
+      <div class="row">
+        <button class="btn btn-primary" id="btn-copy">Copy mission report</button>
+        <button class="btn btn-ghost" id="btn-again">Run another mission</button>
+      </div>
+    </div>
+    <div class="board" id="board-end"></div>
+  </section>
+
+</div>
+
+<script>
+/* ============================================================
+   ICONS — pure geometric SVGs, no emoji. Colored via currentColor.
+   ============================================================ */
+const SHAPES = {
+  hexagon:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4"><polygon points="32,4 58,18 58,46 32,60 6,46 6,18"/></svg>',
+  diamond:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4"><polygon points="32,4 58,32 32,60 6,32"/></svg>',
+  triangle:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4"><polygon points="32,6 58,56 6,56"/></svg>',
+  ring:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="32" cy="32" r="24"/><circle cx="32" cy="32" r="11"/></svg>',
+  chevron:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="14,16 40,32 14,48"/><polyline points="34,16 60,32 34,48" opacity=".5"/></svg>',
+  cross:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="32" y1="8" x2="32" y2="56"/><line x1="8" y1="32" x2="56" y2="32"/></svg>',
+  spark:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="32" y1="4" x2="32" y2="60"/><line x1="4" y1="32" x2="60" y2="32"/><line x1="13" y1="13" x2="51" y2="51"/><line x1="51" y1="13" x2="13" y2="51"/></svg>',
+  lock:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="16" y="28" width="32" height="26" rx="3"/><path d="M22 28V20a10 10 0 0 1 20 0v8"/></svg>'
+};
+function shapeIconHTML(name, size){
+  return `<span class="shape-icon" style="width:${size||52}px;height:${size||52}px;">${SHAPES[name]||SHAPES.diamond}</span>`;
+}
+
+/* ============================================================
+   DONNÉES — projets réels résumés à partir des README fournis.
+   AGENTS holds the agent identity and avatar metadata. PROJECTS holds
+   the project-specific questions and reveal details. Connect projects
+   to their owners with ownerAgentIds.
+   ============================================================ */
+const GIFT_POOL = [
+  {shape:'hexagon', title:'ATS-proof CV dossier', desc:"A Notion template built to slip past automated CV screening filters."},
+  {shape:'diamond', title:'Tech interview field checklist', desc:"The team's 48-hour briefing for a technical interview mission."},
+  {shape:'triangle', title:'Recruiter-radar LinkedIn guide', desc:"How to tune your profile so a tech recruiter stops scrolling."},
+  {shape:'ring', title:"Legendary Agent badge + early access", desc:"Your alias gets priority placement in the next intel reveal."},
+  {shape:'chevron', title:'Handpicked AI intel', desc:"Papers and GitHub repos chosen by the team — not a search copy-paste."},
+  {shape:'cross', title:'A personal dispatch from the team', desc:"A custom encouragement message, written just for your next mission."}
+];
+
+const PEOPLE = [
+  { id:'cipher', codename:'Agent Cipher', realName:'Ahmed Aziz Ammar', avatar:'avatars/ahmed.jpg', tint:'#4FF3FF', locked:false, school:'School to be confirmed', linkedin:'#' },
+  { id:'nova', codename:'Agent Nova', realName:'Abir Ommezzine', avatar:'avatars/abir.jpg', tint:'#FF3F9E', locked:false, school:'School to be confirmed', linkedin:'#' },
+  { id:'vertex', codename:'Agent Vertex', realName:'Mouhib Jridi', avatar:'avatars/mouhib.jpg', tint:'#4FF3FF', locked:false, school:'School to be confirmed', linkedin:'#' },
+  { id:'mirage', codename:'Agent Mirage', realName:'Yosr Jabloun', avatar:'avatars/yosr.jpg', tint:'#FF3F9E', locked:false, school:'School to be confirmed', linkedin:'#' },
+  { id:'pulse', codename:'Agent Pulse', realName:'Zaineb Mhedhbi', avatar:'avatars/zeyneb.jpg', tint:'#A26BFF', locked:false, school:'School to be confirmed', linkedin:'#' },
+  { id:'echo', codename:'Agent Echo', realName:'Maram Laouini', avatar:'avatars/maram.jpg', tint:'#4FF3FF', locked:false, school:'School to be confirmed', linkedin:'#' },
+  { id:'falcon', codename:'Agent Falcon', realName:'Samar Albouchi', avatar:null, tint:'#A26BFF', locked:false, school:'School to be confirmed', linkedin:'#' },
+  { id:'quantum', codename:'Agent Quantum', realName:'Linda Baklouti', avatar:'avatars/linda.jpg', tint:'#FF3F9E', locked:false, school:'School to be confirmed', linkedin:'#' },
+  { id:'ghost', codename:'Agent Ghost', realName:'Yassine Reggui', avatar:'avatars/yassine.jpg', tint:'#5A6390', locked:false, school:'School to be confirmed', linkedin:'#' }
+];
+
+const PROJECTS = [
+    {
+      id:'speckit', name:'Spec Kit', shape:'hexagon', ownerAgentIds:['cipher','nova'],
+      questions:[
+        {id:'sk1', week:'Semaine 1 — Setup', text:"Quel duo technique orchestre la chaîne d'agents du backend Spec Kit ?", options:["FastAPI + LangGraph","Django + Celery","Flask + RQ"], correct:0, wrong:"Presque — mais ce n'est pas cette stack qui orchestre les agents ici.", right:"Exact : FastAPI expose l'API, LangGraph orchestre la chaîne d'agents."},
+        {id:'sk2', week:'Semaine 2 — Pipeline', text:"Combien d'agents composent la chaîne principale (Parsing → Summary → Glossary → Diagram → DocWriter → Layout) ?", options:["6","4","8"], correct:0, wrong:"Recompte la chaîne : Parsing, Summary, Glossary, Diagram, DocWriter, Layout...", right:"Bien vu — 6 agents, un par étape de transformation du document."},
+        {id:'sk3', week:'Semaine 3 — Watcher', text:"Quel dossier le watcher surveille-t-il en temps réel pour déclencher le pipeline ?", options:["/specs","/outputs","/backend"], correct:0, wrong:"Ce dossier-là contient plutôt les livrables déjà générés.", right:"Oui — /specs est la source Markdown surveillée en continu."},
+        {id:'sk4', week:'Semaine 3 — Traçabilité', text:"Quelle empreinte cryptographique la table `artifacts` utilise-t-elle pour détecter chaque modification ?", options:["SHA-256","MD5","CRC32"], correct:0, wrong:"Cette empreinte est plus faible que celle réellement utilisée ici.", right:"Exact — SHA-256 garantit une détection précise de chaque changement."},
+        {id:'sk5', week:'Semaine 4 — Automatisation', text:"Quel agent gère automatiquement les tickets (User Stories, Tasks) ?", options:["L'Agent JIRA","L'Agent Trello","L'Agent Notion"], correct:0, wrong:"Ce n'est pas cet outil qui est synchronisé automatiquement ici.", right:"Bien joué — l'Agent JIRA synchronise l'avancement du projet."},
+        {id:'sk6', week:'Demo Day — Frontend', text:"Sur quelle stack repose le dashboard de suivi temps réel ?", options:["React + Material-UI","Vue + Vuetify","Angular + PrimeNG"], correct:0, wrong:"Ce n'est pas la combinaison utilisée pour ce dashboard.", right:"Exact — React + Material-UI/DataGrid pour le monitoring en direct."},
+        {id:'sk7', week:'Bonus — Extension', text:"Que remplace l'extension VS Code SpecKit une fois installée ?", options:["Le dossier /scripts","Le dossier /backend","Le dossier /outputs"], correct:0, wrong:"Ce dossier-là reste indispensable même avec l'extension.", right:"Bien vu — l'extension intègre watcher + serveur directement dans VS Code."},
+        {id:'sk8', week:'Bonus — BDD', text:"Quelle base de données garantit l'immuabilité des versions de documents ?", options:["PostgreSQL","MongoDB","SQLite"], correct:0, wrong:"Ce n'est pas cette base qui gère le versioning immuable ici.", right:"Exact — PostgreSQL, avec une table doc_versions dédiée et immuable."}
+      ],
+      reveal:{
+        name:'Spec Kit', desc:"Un pipeline multi-agents (FastAPI + LangGraph) qui transforme des specs Markdown brutes en livrables certifiés — PDF, diagrammes, évaluations — avec un dashboard React de suivi temps réel et une extension VS Code dédiée.",
+        demoUrl:'#', githubUrl:'https://github.com/ahmed200346/Extension_GithubSpecKit',
+        school:'School to be confirmed', linkedin:'#', email:'contact-a-renseigner@example.com'
+      }
+    },
+    {
+      id:'aras-readiness', name:'ARAS — Agentic Readiness', shape:'diamond', ownerAgentIds:['falcon'],
+      questions:[
+        {id:'as1', week:'Semaine 1 — Vision', text:"Combien de dimensions ARAS évalue-t-il pour juger la préparation d'un site aux agents IA ?", options:["4","3","5"], correct:0, wrong:"Recompte : Discoverability, Comprehension, Interaction, Security...", right:"Exact — 4 dimensions, moyenne non pondérée pour le score global."},
+        {id:'as2', week:'Semaine 1 — Piège', text:"Laquelle de ces dimensions n'existe PAS dans ARAS ?", options:["Performance mobile","Comprehension","Security"], correct:0, wrong:"Cette dimension fait bien partie des 4 évaluées par ARAS.", right:"Bien vu, piège évité — 'Performance mobile' n'est pas une dimension ARAS."},
+        {id:'as3', week:'Semaine 2 — Architecture', text:"Quel agent fait uniquement de la perception, sans jamais juger ni scorer ?", options:["Evidence Collector Agent","Orchestrator Agent","Report Generator Agent"], correct:0, wrong:"Cet agent-là a un rôle différent dans le pipeline.", right:"Exact — il assemble les preuves, aucune décision n'est prise à cette étape."},
+        {id:'as4', week:'Semaine 3 — Recommandations', text:"Sur quoi s'appuie le Recommendation Agent pour générer ses conseils ?", options:["Un pipeline RAG (base de connaissances vectorielle)","Une recherche Google en direct","Une base de règles statiques uniquement"], correct:0, wrong:"Ce n'est pas la méthode utilisée pour générer les recommandations ici.", right:"Bien joué — retrieval + LLM, ancré dans une vraie base de connaissances."},
+        {id:'as5', week:'Semaine 4 — AutoFix', text:"Dans le pipeline AutoFix, quel agent ne peut JAMAIS auto-approuver un correctif de sécurité ?", options:["HumanValidationAgent","AutoFixAgent","SimulationAgent"], correct:0, wrong:"Cet agent peut auto-approuver certains correctifs non-sécurité.", right:"Exact — tout correctif sécurité reste PENDING sans validation humaine explicite."},
+        {id:'as6', week:'Demo Day — Sécurité', text:"Le SimulationAgent applique les correctifs...", options:["à une copie en mémoire, jamais au dépôt réel","directement au site en production","uniquement sur une branche git séparée"], correct:0, wrong:"Ce comportement serait risqué — ce n'est pas ce que fait ARAS.", right:"Bien vu — jamais de modification réelle, uniquement une simulation."},
+        {id:'as7', week:'Bonus — Outils', text:"Quel outil bas niveau détecte les pages de blocage WAF/anti-bot ?", options:["bot-block-detector.py","http-client.py","schema-extractor.py"], correct:0, wrong:"Cet outil a une autre responsabilité dans le pipeline.", right:"Exact — il évite de confondre blocage technique et vraie non-préparation."},
+        {id:'as8', week:'Bonus — Déploiement', text:"Sur quelle plateforme le frontend ARAS est-il prévu pour être déployé ?", options:["Vercel","Netlify","GitHub Pages"], correct:0, wrong:"Ce n'est pas la plateforme prévue dans le README.", right:"Bien vu — Vercel pour le frontend, Render pour le backend."}
+      ],
+      reveal:{
+        name:'ARAS — Agentic Readiness Assessment Framework', desc:"Une plateforme multi-agents qui évalue si un site web est prêt à être utilisé par des agents IA autonomes, sur 4 dimensions, avec un pipeline AutoFix capable de proposer — et simuler — des correctifs.",
+        demoUrl:'#', githubUrl:'https://github.com/samaralbouchi/ARAS',
+        school:'School to be confirmed', linkedin:'#', email:'contact-a-renseigner@example.com'
+      }
+    },
+    {
+      id:'world-models', name:'World Models Platform', shape:'ring', ownerAgentIds:['mirage'],
+      questions:[
+        {id:'wm1', week:'Semaine 1 — Origines', text:"Qui a introduit le terme « world model » en apprentissage automatique, et en quelle année ?", options:["Jürgen Schmidhuber, en 1990","Yann LeCun, en 2015","Geoffrey Hinton, en 2005"], correct:0, wrong:"Ni la bonne personne, ni la bonne décennie.", right:"Exact — Schmidhuber a posé le terme dès 1990, bien avant l'essor du deep learning actuel."},
+        {id:'wm2', week:'Semaine 1 — Papier fondateur', text:"Le papier « World Models » (2018) de Ha & Schmidhuber propose qu'un agent apprenne à...", options:["« rêver » dans une représentation compressée de son environnement pour planifier","mémoriser du texte brut mot à mot","classifier des images médicales"], correct:0, wrong:"Ce n'est pas l'idée centrale du papier fondateur.", right:"Bien vu — l'agent s'entraîne en partie dans son propre 'rêve' latent."},
+        {id:'wm3', week:'Semaine 2 — Frontière', text:"Quel modèle de DeepMind génère des environnements 3D explorables et cohérents à partir d'une simple image ?", options:["Genie 2","AlphaFold","WaveNet"], correct:0, wrong:"Ce modèle sert un tout autre objectif de recherche.", right:"Exact — Genie 2 étend la génération d'environnements interactifs à la 3D."},
+        {id:'wm4', week:'Semaine 2 — Limites', text:"Quelle limite reconnue affecte encore Sora (OpenAI) en tant que « simulateur du monde » ?", options:["Il ne modélise pas toujours bien la physique (ex. verre qui se brise)","Il ne génère que du texte","Il ne fonctionne qu'en noir et blanc"], correct:0, wrong:"Ce n'est pas la limite documentée par OpenAI lui-même.", right:"Bien vu — OpenAI l'admet explicitement dans son propre rapport technique."},
+        {id:'wm5', week:'Semaine 3 — Records', text:"Dreamer 4 a appris à collecter des diamants dans Minecraft...", options:["entièrement à partir de données hors-ligne, sans interagir en direct pendant l'entraînement","en jouant un million de parties en ligne","en copiant le code d'un joueur humain"], correct:0, wrong:"Ce n'est pas la méthode qui a rendu ce résultat marquant.", right:"Exact — et avec 100x moins de données que l'agent VPT d'OpenAI."},
+        {id:'wm6', week:'Semaine 3 — Analogie', text:"Les world models s'inspirent d'une capacité humaine bien connue :", options:["notre capacité à simuler mentalement les conséquences d'une action avant de la faire","notre capacité à mémoriser des visages","notre capacité à calculer rapidement de tête"], correct:0, wrong:"Ce n'est pas l'analogie centrale utilisée dans la recherche.", right:"Bien vu — comme un batteur qui anticipe la trajectoire de la balle."},
+        {id:'wm7', week:'Semaine 4 — Temps réel', text:"Genie 3 se distingue par sa capacité à...", options:["générer un monde interactif en temps réel (720p, 24 img/s) avec une bonne cohérence spatiale","générer uniquement des sons d'ambiance","traduire du texte en 50 langues"], correct:0, wrong:"Ce n'est pas la performance qui a marqué la sortie de Genie 3.", right:"Exact — un monde qui reste stable même quand on s'en détourne puis y revient."},
+        {id:'wm8', week:'Demo Day — Écosystème', text:"Quelle start-up de Fei-Fei Li a levé 230M$ pour construire des « large world models » ?", options:["World Labs","Anthropic","Mistral AI"], correct:0, wrong:"Ce n'est pas cette entreprise-là qui porte ce projet précis.", right:"Bien vu — World Labs, fondée par Fei-Fei Li."}
+      ],
+      reveal:{
+        name:'World Models — Plateforme de veille & vulgarisation', desc:"Un travail de recherche qui recense et vulgarise les avancées autour des world models — ces modèles qui apprennent les dynamiques d'un environnement pour planifier et « imaginer » des futurs possibles — condensé dans une plateforme récapitulative.",
+        demoUrl:'#', githubUrl:'#',
+        school:'School to be confirmed', linkedin:'#', email:'contact-a-renseigner@example.com'
+      }
+    },
+    {
+      id:'jepa-research', name:'Research — I-JEPA & V-JEPA', shape:'triangle', ownerAgentIds:['quantum'],
+      questions:[
+        {id:'lj1', week:'Semaine 1 — Le problème', text:"Que reproche-t-on principalement aux méthodes génératives classiques (type autoencodeur) pour apprendre à représenter le monde ?", options:["Elles gaspillent leur capacité à reconstruire des détails pixel par pixel, souvent sans intérêt sémantique","Elles sont trop rapides à entraîner","Elles n'utilisent jamais de réseaux de neurones"], correct:0, wrong:"Ce n'est pas ce défaut-là qui motive l'architecture JEPA.", right:"Exact — I-JEPA évite de reconstruire les pixels, il prédit directement dans un espace abstrait."},
+        {id:'lj2', week:'Semaine 1 — Espace latent', text:"Que représente concrètement un « espace latent » dans I-JEPA ?", options:["Une représentation abstraite et compressée de l'image, pas les pixels bruts","Le dossier où sont stockées les images d'entraînement","Une simple compression JPEG de l'image"], correct:0, wrong:"Ce n'est pas ce que désigne l'espace latent ici.", right:"Bien vu — c'est un espace de caractéristiques, pas un espace de pixels."},
+        {id:'lj3', week:'Semaine 2 — Stratégie de masquage', text:"Comment I-JEPA masque-t-il une image pendant l'entraînement ?", options:["En cachant de larges blocs contigus de l'image, pas des pixels isolés au hasard","En rendant l'image totalement noire","En supprimant une image sur deux du batch"], correct:0, wrong:"Ce n'est pas la stratégie de masquage employée par I-JEPA.", right:"Exact — masquer de larges blocs empêche le modèle de tricher avec de simples indices locaux."},
+        {id:'lj4', week:'Semaine 2 — Le predictor', text:"Que doit prédire le module « predictor » d'I-JEPA à partir des blocs visibles ?", options:["La représentation latente des blocs masqués, pas leurs pixels","Le nom de l'objet présent dans l'image","La position GPS où la photo a été prise"], correct:0, wrong:"Ce n'est pas ce que le predictor cherche à estimer.", right:"Bien joué — il prédit un vecteur abstrait, jamais une image reconstruite."},
+        {id:'lj5', week:'Semaine 3 — Target encoder', text:"Comment le « target encoder » (qui encode les blocs masqués) est-il mis à jour pendant l'entraînement ?", options:["Par une moyenne mobile exponentielle (EMA) des poids du context encoder, jamais par rétropropagation directe","Il est ré-entraîné depuis zéro à chaque batch","Il copie exactement les poids du predictor"], correct:0, wrong:"Ce n'est pas le mécanisme de mise à jour utilisé ici.", right:"Exact — cette asymétrie EMA empêche le modèle de « s'effondrer » vers une solution triviale."},
+        {id:'lj6', week:'Semaine 3 — Modèle à énergie', text:"Dans le cadre théorique d'un « modèle à énergie » (energy-based model), à quoi correspond l'énergie associée à une paire (contexte, prédiction) ?", options:["Une mesure de l'incompatibilité entre le contexte observé et la représentation prédite — plus elle est basse, plus la prédiction est plausible","La consommation électrique du GPU pendant l'entraînement","Le nombre de couches du réseau de neurones"], correct:0, wrong:"Ce n'est pas la définition d'« énergie » utilisée dans ce cadre théorique.", right:"Bien vu — apprendre revient à façonner cette fonction d'énergie pour qu'elle soit basse sur les paires plausibles."},
+        {id:'lj7', week:'Semaine 4 — V-JEPA', text:"Qu'ajoute V-JEPA par rapport à I-JEPA pour s'adapter à la vidéo ?", options:["Un masquage qui couvre aussi la dimension temporelle, pas seulement l'espace","La génération automatique de sous-titres","La compression du son de la vidéo"], correct:0, wrong:"Ce n'est pas l'extension apportée par V-JEPA.", right:"Exact — on masque des tubes spatio-temporels pour forcer une vraie compréhension du mouvement."},
+        {id:'lj8', week:'Bonus — Pourquoi ça marche', text:"Pourquoi l'approche JEPA évite-t-elle le besoin de paires négatives, contrairement à certaines méthodes contrastives ?", options:["Parce que la prédiction se fait dans l'espace latent avec des mécanismes anti-effondrement (ex. target encoder asymétrique), sans comparer à des exemples négatifs","Parce qu'elle utilise deux fois plus de données d'entraînement","Parce qu'elle n'utilise aucun réseau de neurones"], correct:0, wrong:"Ce n'est pas la raison pour laquelle JEPA se passe de paires négatives.", right:"Bien vu — c'est exactement ce qui rend l'architecture plus simple à entraîner qu'une méthode contrastive classique."}
+      ],
+      reveal:{
+        name:'Recherche — I-JEPA & V-JEPA', desc:"Une recherche approfondie sur les architectures JEPA de Meta AI — I-JEPA pour l'image, V-JEPA pour la vidéo — qui apprennent en prédisant dans un espace latent plutôt qu'en reconstruisant des pixels, dans la lignée de la vision des « world models » défendue par Yann LeCun.",
+        demoUrl:'#', githubUrl:'#',
+        school:'School to be confirmed', linkedin:'#', email:'contact-a-renseigner@example.com'
+      }
+    },
+    {
+      id:'aras-optimization', name:'ARAS — Agentic Optimization', shape:'chevron', ownerAgentIds:['vertex'],
+      questions:[
+        {id:'am1', week:'Semaine 1 — Vision v2', text:"Qu'ajoute la Phase 2 de ce ARAS par rapport à un simple audit ?", options:["Un plan d'optimisation agentique guidé par un objectif utilisateur","Un simple export Excel des scores","Un système de notation par étoiles"], correct:0, wrong:"Ce n'est pas ce qui distingue cette Phase 2 d'un audit classique.", right:"Exact — Audit → Recommandations → Objectif → Plan → Remédiation → Simulation → Replanification."},
+        {id:'am2', week:'Semaine 2 — Simulation', text:"Le Simulator de la Phase 2 modifie-t-il le vrai site web ?", options:["Non, jamais — il projette un état hypothétique","Oui, automatiquement dès validation","Seulement si le score est trop bas"], correct:0, wrong:"Ce comportement contredirait un principe central du système.", right:"Bien vu — la Simulation est virtuelle, jamais un déploiement réel."},
+        {id:'am3', week:'Semaine 2 — Scoring', text:"Comment les 4 dimensions sont-elles pondérées dans le score global ?", options:["25% chacune, à parts égales","40% sécurité, 20% le reste","Pondération dynamique par IA"], correct:0, wrong:"Ce n'est pas la logique de pondération utilisée ici.", right:"Exact — un score manquant compte pour 0, jamais silencieusement ignoré."},
+        {id:'am4', week:'Semaine 3 — Garde-fou', text:"Que fait le Planner si aucune recommandation de la Phase 1 ne couvre un sujet ?", options:["Il n'invente jamais de nouveau problème","Il en invente un pour combler le vide","Il relance automatiquement toute la Phase 1"], correct:0, wrong:"Ce comportement serait risqué — ce n'est pas celui du Planner.", right:"Bien vu — chaque tâche du plan est traçable jusqu'à une vraie recommandation."},
+        {id:'am5', week:'Semaine 3 — LLM', text:"Quel moteur LLM est utilisé par défaut pour la génération RAG ?", options:["Groq (llama-3.3-70b-versatile)","OpenAI GPT-4","Anthropic Claude"], correct:0, wrong:"Ce n'est pas le fournisseur configuré par défaut ici.", right:"Exact — avec un repli 100% déterministe si la clé API n'est pas configurée."},
+        {id:'am6', week:'Semaine 4 — Boucle', text:"Combien de tentatives de replanification maximum par défaut ?", options:["3","1","10"], correct:0, wrong:"Ce n'est pas la limite par défaut du système.", right:"Bien vu — la boucle est bornée, elle ne tourne jamais indéfiniment."},
+        {id:'am7', week:'Demo Day — Verdict', text:"Quels sont les 3 statuts possibles d'un critère après simulation ?", options:["ADDRESSED / PARTIALLY ADDRESSED / UNADDRESSED","OK / WARNING / ERROR","PASS / FAIL / SKIP"], correct:0, wrong:"Ce n'est pas la terminologie utilisée dans ce système.", right:"Exact — un vocabulaire précis pour ne jamais surpromettre un résultat."},
+        {id:'am8', week:'Bonus — Livrables', text:"Combien de rapports PDF distincts le système génère-t-il au total (Phase 1 + Phase 2) ?", options:["2, jamais fusionnés","1 seul rapport combiné","4 rapports"], correct:0, wrong:"Ce n'est pas le nombre exact de livrables générés.", right:"Bien vu — un rapport diagnostic, un rapport d'optimisation, jamais mélangés."}
+      ],
+      reveal:{
+        name:'ARAS — Agentic Readiness Assessment & Optimization System', desc:"L'évolution en deux phases de l'audit ARAS : après le diagnostic, un second pipeline LangGraph comprend un objectif utilisateur, planifie des remédiations concrètes, simule leur impact projeté, et replanifie automatiquement si l'objectif n'est pas encore atteint.",
+        demoUrl:'#', githubUrl:'#',
+        school:'School to be confirmed', linkedin:'#', email:'contact-a-renseigner@example.com'
+      }
+    },
+    {
+      id:'llm-router', name:'Adaptive LLM Router', shape:'cross', ownerAgentIds:['pulse','echo'],
+      questions:[
+        {id:'lr1', week:'Semaine 1 — Orchestration', text:"Quel framework orchestre le pipeline d'agents du routeur (Analyse → Décision → ... → Adaptation) ?", options:["LangGraph","Apache Airflow","Celery"], correct:0, wrong:"Ce n'est pas l'outil qui orchestre ce pipeline précis.", right:"Exact — chaque agent est un nœud LangGraph indépendant et testable."},
+        {id:'lr2', week:'Semaine 1 — Formule', text:"Dans la formule de score (wQ·Q + wL·L − wC·C − wG·G + wH·H), que pénalise le terme C ?", options:["Le coût par requête","La qualité attendue du modèle","Le score historique appris"], correct:0, wrong:"Ce terme est au contraire favorisé dans la formule, pas pénalisé.", right:"Bien vu — le coût est soustrait, donc pénalisé dans le score final."},
+        {id:'lr3', week:'Semaine 2 — Résilience', text:"Que se passe-t-il si le modèle choisi échoue ou renvoie une réponse vide ?", options:["Un repli automatique en cascade vers le candidat suivant","La requête est simplement abandonnée","Le système redémarre entièrement"], correct:0, wrong:"Le système est plus résilient que ça — il ne s'arrête pas là.", right:"Exact — un repli en cascade garantit qu'une requête ne reste jamais bloquée."},
+        {id:'lr4', week:'Semaine 3 — Mémoire', text:"Quelle techno assure la mémoire sémantique (RAG) sans nécessiter de clé API ?", options:["ChromaDB + embeddings ONNX MiniLM locaux","Pinecone cloud","Elasticsearch"], correct:0, wrong:"Cette option nécessiterait justement une clé API externe.", right:"Bien vu — tout tourne en local, aucune dépendance API pour cette brique."},
+        {id:'lr5', week:'Semaine 3 — Monitoring', text:"Quel duo d'outils assure le monitoring visuel des métriques du routeur ?", options:["Prometheus + Grafana","Datadog + Splunk","New Relic + Sentry"], correct:0, wrong:"Ce n'est pas la stack de monitoring choisie pour ce projet.", right:"Exact — métriques natives exposées, scrapées par Prometheus, visualisées dans Grafana."},
+        {id:'lr6', week:'Semaine 4 — Objectifs métier', text:"Le business goal « latency » convient particulièrement à...", options:["un chatbot temps réel qui doit répondre en moins d'1s","une startup qui veut minimiser sa facture LLM","un cas d'usage médical critique"], correct:0, wrong:"Ce cas d'usage correspond plutôt à un autre objectif métier.", right:"Bien vu — chaque objectif change dynamiquement les poids de la formule."},
+        {id:'lr7', week:'Demo Day — Apprentissage', text:"Comment le score historique H est-il mis à jour après chaque requête ?", options:["Par une moyenne mobile exponentielle (EMA) + feedback humain 👍/👎","Par un vote mensuel de la communauté","Il ne change jamais après le déploiement"], correct:0, wrong:"Ce n'est pas le mécanisme d'apprentissage utilisé ici.", right:"Exact — c'est la boucle d'adaptation qui rend le routeur vraiment adaptatif."},
+        {id:'lr8', week:'Bonus — Dashboard', text:"À quoi sert la page « Arena » du dashboard ?", options:["Comparer deux modèles en A/B sur la même requête","Modifier le code source en direct","Consulter la facture du mois"], correct:0, wrong:"Ce n'est pas la fonction de cette page du dashboard.", right:"Bien vu — un vrai comparateur A/B intégré à l'interface."}
+      ],
+      reveal:{
+        name:'Adaptive LLM Router', desc:"Un routeur agentique qui analyse chaque requête, choisit le meilleur LLM disponible selon un objectif métier (coût, qualité, latence), exécute avec repli automatique, mesure la qualité réelle de la réponse, puis ajuste ses scores pour la prochaine requête — une vraie boucle d'apprentissage en production.",
+        demoUrl:'#', githubUrl:'#',
+        school:'School to be confirmed', linkedin:'#', email:'contact-a-renseigner@example.com'
+      }
+    },
+    {
+      id:'speckit-auto-ai', name:'Speckit Auto-AI', shape:'hexagon', ownerAgentIds:['ghost'],
+      questions:[
+        {id:'sa1', week:'Week 1 — Foundation', text:'What is the main goal of Speckit Auto-AI?', options:['Turn specifications into structured, AI-assisted project deliverables','Replace every developer with a chatbot','Only store source code backups'], correct:0, wrong:'Not quite. The platform focuses on transforming and structuring specifications.', right:'Correct. Speckit Auto-AI turns specifications into useful, structured deliverables.'},
+        {id:'sa2', week:'Week 1 — Input', text:'Which document type is a natural starting point for the Speckit Auto-AI workflow?', options:['A written project specification','A finished marketing video','A spreadsheet of salaries'], correct:0, wrong:'Look for the document that describes what needs to be built.', right:'Correct. The workflow starts from a written specification.'},
+        {id:'sa3', week:'Week 2 — Automation', text:'Why does the platform use AI agents in a pipeline?', options:['To automate specialized steps while keeping the workflow organized','To make every output random','To avoid producing any documentation'], correct:0, wrong:'The agents have focused responsibilities in an organized workflow.', right:'Correct. Each agent can handle a focused transformation step.'},
+        {id:'sa4', week:'Week 2 — Deliverables', text:'Which output is most aligned with a specification-automation platform?', options:['A structured project document','An unrelated music playlist','A hardware repair invoice'], correct:0, wrong:'Think about what helps a team act on a specification.', right:'Correct. Structured documentation is a core deliverable.'},
+        {id:'sa5', week:'Week 3 — Traceability', text:'Why is traceability valuable when generating project artifacts?', options:['It makes changes and their origins easier to follow','It removes the need to review work','It makes files impossible to update'], correct:0, wrong:'Traceability supports clarity and review; it does not prevent updates.', right:'Correct. Traceability helps teams understand how an artifact was produced.'},
+        {id:'sa6', week:'Week 3 — Quality', text:'What should an automated specification workflow prioritize?', options:['Consistent, reviewable outputs','Hidden and unrepeatable decisions','Only visual effects'], correct:0, wrong:'A professional workflow needs outputs that can be checked and reused.', right:'Correct. Consistency and reviewability make automation useful to a team.'},
+        {id:'sa7', week:'Week 4 — Collaboration', text:'How can generated project artifacts help a delivery team?', options:['By giving the team a shared, structured reference','By replacing all team communication','By removing project requirements'], correct:0, wrong:'Artifacts support collaboration; they do not remove the need for people or requirements.', right:'Correct. A shared reference helps the team align around the project.'},
+        {id:'sa8', week:'Demo Day — Value', text:'What is a key benefit of Speckit Auto-AI?', options:['Faster conversion of specifications into actionable assets','More manual copy-and-paste work','Fewer ways to inspect a project'], correct:0, wrong:'The value is in reducing repetitive work while retaining useful structure.', right:'Correct. The platform accelerates the path from specification to actionable assets.'}
+      ],
+      reveal:{name:'Speckit Auto-AI', desc:'An AI-assisted specification workflow that turns project requirements into structured, traceable deliverables for product and engineering teams.', demoUrl:'#', githubUrl:'#', school:'School to be confirmed', linkedin:'#', email:'contact-a-renseigner@example.com'}
+    }
+];
+
+/* ============================================================
+   Utilitaires
+   ============================================================ */
+const $ = (sel)=>document.querySelector(sel);
+const $$ = (sel)=>document.querySelectorAll(sel);
+const todayKey = () => 'tries:' + new Date().toISOString().slice(0,10);
+const prefersReducedMotion = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function initials(name){ return (name||'?').split(/[\s&]+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase(); }
+function projectAgents(project){ return project.ownerAgentIds.map(id=>PEOPLE.find(agent=>agent.id===id)).filter(Boolean); }
+function whoLabel(project){ return projectAgents(project).map(agent=>agent.codename).join(' & '); }
+
+/* ============================================================
+   Generic floating / flying flip-card builder.
+   Click flips it; the back offers an explicit CONFIRM or PUT BACK.
+   ============================================================ */
+function buildFlipCard({tint, shape, avatarUrl, avatarInitials, frontLabel, frontSub, backTitle, backSub, confirmLabel, onConfirm, locked, gallery}){
+  const card = document.createElement('div');
+  card.className = 'flip-card' + (locked ? ' locked' : '') + (gallery ? ' agent-gallery' : '');
+  card.tabIndex = locked ? -1 : 0;
+  card.style.setProperty('--tint', tint || '#4FF3FF');
+
+  const fx = (8 + Math.random()*12).toFixed(1) + 'px';
+  const fy = (8 + Math.random()*12).toFixed(1) + 'px';
+  const fr = (2 + Math.random()*3.5).toFixed(1) + 'deg';
+  const fdur = (7 + Math.random()*6).toFixed(2) + 's';
+  const fdelay = (Math.random()*-10).toFixed(2) + 's';
+  card.style.setProperty('--fx', fx);
+  card.style.setProperty('--fy', fy);
+  card.style.setProperty('--fr', fr);
+  card.style.setProperty('--fdur', fdur);
+  card.style.setProperty('--fdelay', fdelay);
+
+  const visual = avatarUrl
+    ? `<div class="avatar-hex"><img src="${avatarUrl}" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="avatar-fallback" style="display:none;">${escapeHtml(avatarInitials||'?')}</div></div>`
+    : shapeIconHTML(shape, 52);
+
+  card.innerHTML = `
+    <div class="card-inner">
+      <div class="card-front">
+        <div class="card-scan"></div>
+        ${visual}
+        ${gallery ? '' : `<p class="front-label">${escapeHtml(frontLabel)}</p><p class="front-sub">${locked ? 'CLASSIFIED' : (frontSub || 'TAP TO INSPECT')}</p>`}
+      </div>
+      <div class="card-back">
+        <p class="back-title">${escapeHtml(backTitle)}</p>
+        ${backSub ? `<div class="back-sub">${backSub}</div>` : ''}
+        <div class="back-actions">
+          <button type="button" class="btn-confirm">${escapeHtml(confirmLabel || 'CONFIRM')}</button>
+          <button type="button" class="btn-return">PUT BACK</button>
+        </div>
+      </div>
+    </div>`;
+
+  if(locked) return card;
+
+  const inner = card.querySelector('.card-inner');
+
+  card.addEventListener('mousemove', (e)=>{
+    if(card.classList.contains('flipped')) return;
+    const r = card.getBoundingClientRect();
+    const px = (e.clientX - r.left)/r.width - .5;
+    const py = (e.clientY - r.top)/r.height - .5;
+    inner.style.transform = `rotateX(${(py*-18).toFixed(2)}deg) rotateY(${(px*20).toFixed(2)}deg) scale(1.045)`;
+    card.style.setProperty('--gx', ((px+.5)*100).toFixed(0)+'%');
+    card.style.setProperty('--gy', ((py+.5)*100).toFixed(0)+'%');
+    card.classList.add('hovering');
+  });
+  card.addEventListener('mouseleave', ()=>{
+    inner.style.transform = '';
+    card.classList.remove('hovering');
+  });
+  card.addEventListener('click', (e)=>{
+    if(e.target.closest('.btn-confirm') || e.target.closest('.btn-return')) return;
+    if(!card.classList.contains('flipped')) card.classList.add('flipped');
+  });
+  card.addEventListener('keydown', (e)=>{
+    if((e.key==='Enter' || e.key===' ') && !card.classList.contains('flipped')){
+      e.preventDefault(); card.classList.add('flipped');
+    }
+  });
+  card.querySelector('.btn-return').addEventListener('click', (e)=>{
+    e.stopPropagation();
+    card.classList.remove('flipped');
+  });
+  card.querySelector('.btn-confirm').addEventListener('click', (e)=>{
+    e.stopPropagation();
+    onConfirm && onConfirm();
+  });
+  return card;
+}
+
+function renderOneAvatar(agent, opts){
+  const size = (opts && opts.face) || 44;
+  const wrap = document.createElement('div');
+  wrap.className = 'avatar-hex';
+  wrap.style.width = size+'px'; wrap.style.height = size+'px'; wrap.style.marginBottom='0';
+  wrap.style.setProperty('--tint', agent.tint);
+  wrap.innerHTML = agent.avatar
+    ? `<img src="${agent.avatar}" alt="${escapeHtml(agent.codename)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="avatar-fallback" style="display:none;">${initials(agent.realName)}</div>`
+    : `<div class="avatar-fallback" style="display:flex;">${initials(agent.realName)}</div>`;
+  return wrap;
+}
+function renderAvatar(rowEl, project, opts){
+  rowEl.innerHTML = '';
+  const agents = projectAgents(project);
+  agents.forEach(agent=> rowEl.appendChild(renderOneAvatar(agent, opts)));
+}
+
+/* ============================================================
+   État
+   ============================================================ */
+let state = { triesLeft:3, selectedPerson:null, selectedProject:null, questions:[], qIndex:0, energy:3, score:0, results:[] };
+
+function showScreen(id){ $$('.screen').forEach(s=>s.classList.remove('active')); $('#'+id).classList.add('active'); window.scrollTo({top:0, behavior:'smooth'}); }
+function flash(){ const f=$('#flash'); f.classList.remove('pop'); void f.offsetWidth; f.classList.add('pop'); }
+
+/* ---- Storage: daily tries ---- */
+async function loadTries(){
+  try{ const r = await window.storage.get(todayKey(), false); state.triesLeft = r ? JSON.parse(r.value).left : 3; }
+  catch(e){ state.triesLeft = 3; }
+  updateTriesUI();
+}
+async function spendTry(){
+  state.triesLeft = Math.max(0, state.triesLeft-1);
+  try{ await window.storage.set(todayKey(), JSON.stringify({left:state.triesLeft}), false); }catch(e){}
+  updateTriesUI();
+}
+function updateTriesUI(){
+  $('#tries-left').textContent = state.triesLeft > 0
+    ? `(${state.triesLeft} ${state.triesLeft===1?'guess':'guesses'} remaining today)`
+    : '(No guesses remaining today. Report back tomorrow.)';
+}
+
+/* ---- Storage: mastery + easter egg bag (personal) ---- */
+async function getMastery(projectId, agentId){
+  try{ const r = await window.storage.get('mastery:'+projectId+':'+agentId, false); return r ? JSON.parse(r.value) : []; }
+  catch(e){ return []; }
+}
+async function addMastery(projectId, agentId, correctIds){
+  const existing = await getMastery(projectId, agentId);
+  const merged = Array.from(new Set([...existing, ...correctIds]));
+  try{ await window.storage.set('mastery:'+projectId+':'+agentId, JSON.stringify(merged), false); }catch(e){}
+  return merged;
+}
+async function computeMasteredCount(){
+  let n=0;
+  for(const project of PROJECTS){
+    if(!project.questions.length) continue;
+    for(const agentId of project.ownerAgentIds){
+      const done = await getMastery(project.id, agentId);
+      if(done.length >= project.questions.length) n++;
+    }
+  }
+  return n;
+}
+async function getEggState(){
+  try{ const r = await window.storage.get('eggState', false); return r ? JSON.parse(r.value) : {given:0, bag:[], lastGift:-1}; }
+  catch(e){ return {given:0, bag:[], lastGift:-1}; }
+}
+async function setEggState(s){ try{ await window.storage.set('eggState', JSON.stringify(s), false); }catch(e){} }
+
+async function maybeTriggerEgg(){
+  const masteredCount = await computeMasteredCount();
+  const egg = await getEggState();
+  const nextThreshold = (egg.given+1)*3;
+  if(masteredCount < nextThreshold) return;
+  if(!egg.bag.length){
+    let pool = shuffle(GIFT_POOL.map((_,i)=>i));
+    if(pool[0]===egg.lastGift && pool.length>1){ [pool[0],pool[1]]=[pool[1],pool[0]]; }
+    egg.bag = pool;
+  }
+  const idx = egg.bag.shift();
+  egg.given += 1; egg.lastGift = idx;
+  await setEggState(egg);
+  showEgg(GIFT_POOL[idx], masteredCount);
+}
+function showEgg(gift, masteredCount){
+  const el = $('#egg-modal-content');
+  el.innerHTML = `<div class="icon">${shapeIconHTML(gift.shape, 44)}</div>
+    <h2>Hidden intel unlocked</h2>
+    <p>You've fully cracked <b>${masteredCount}</b> different case files. Here's your drop:</p>
+    <div class="egg-gift">${shapeIconHTML(gift.shape,22)}<span><b>${escapeHtml(gift.title)}</b><br><span style="font-weight:400;">${escapeHtml(gift.desc)}</span></span></div>
+    <button class="btn btn-primary" id="btn-egg-close">Secure the intel</button>`;
+  $('#egg-overlay').classList.add('show');
+  $('#btn-egg-close').onclick = ()=> $('#egg-overlay').classList.remove('show');
+}
+
+/* ---- Storage: leaderboard (shared) ---- */
+async function loadLeaderboard(targetElId){
+  const el = $('#'+targetElId);
+  el.innerHTML = '<h3>Field-agent leaderboard</h3><div class="board-row"><span>Scanning intel…</span></div>';
+  try{ const r = await window.storage.get('leaderboard', true); renderBoard(el, r ? JSON.parse(r.value) : []); }
+  catch(e){ renderBoard(el, []); }
+}
+function renderBoard(el, list){
+  const top = [...list].sort((a,b)=>b.score-a.score).slice(0,5);
+  el.innerHTML = '<h3>Field-agent leaderboard, visible to everyone</h3>' + (top.length ? top.map(p=>`<div class="board-row"><span>${escapeHtml(p.name)}: ${escapeHtml(p.track||'')}</span><b>${p.score} pts</b></div>`).join('') : '<div class="board-row"><span>Be the first agent in the field.</span></div>');
+}
+async function submitScore(name, track, score){
+  try{
+    const r = await window.storage.get('leaderboard', true);
+    let list = r ? JSON.parse(r.value) : [];
+    list.push({name: name||'Unknown Agent', track, score, date:new Date().toISOString()});
+    list = list.sort((a,b)=>b.score-a.score).slice(0,50);
+    await window.storage.set('leaderboard', JSON.stringify(list), true);
+    return list;
+  }catch(e){ return []; }
+}
+
+async function submitEmailLead(email, projectId, agentGuessedId, matched){
+  try{
+    const r = await window.storage.get('leads', true);
+    const leads = r ? JSON.parse(r.value) : [];
+    leads.push({email, projectId, agentGuessedId, matched, date:new Date().toISOString()});
+    await window.storage.set('leads', JSON.stringify(leads), true);
+    return true;
+  }catch(e){ return false; }
+}
+
+/* ---- Roster ---- */
+function renderPeople(){
+  const el = $('#people-roster'); el.innerHTML='';
+  for(const person of PEOPLE){
+    const schoolBit = (!person.locked && person.school) ? `<p class="school-line">${escapeHtml(person.school)}</p>` : '';
+    const linkedinBit = (!person.locked && person.linkedin) ? `<a class="linkedin-chip" href="${person.linkedin}" target="_blank" rel="noopener" onclick="event.stopPropagation();">LinkedIn profile</a>` : '';
+    const card = buildFlipCard({
+      tint: person.tint,
+      avatarUrl: person.locked ? null : person.avatar,
+      shape: person.locked ? 'lock' : null,
+      avatarInitials: initials(person.realName),
+      frontLabel: person.codename,
+      frontSub: person.locked ? 'LOCKED FILE' : 'TAP TO INSPECT',
+      backTitle: person.realName,
+      backSub: schoolBit + linkedinBit,
+      confirmLabel: 'SELECT AGENT',
+      locked: person.locked,
+      gallery: true,
+      onConfirm: ()=>{
+        state.selectedPerson = person;
+        flash();
+        setTimeout(()=>{ showScreen('screen-projects'); renderProjects(); }, 180);
+      }
+    });
+    el.appendChild(card);
+  }
+}
+
+async function renderProjects(){
+  const el = $('#projects-grid'); el.innerHTML='';
+  $('#projects-heading').textContent = state.selectedPerson
+    ? `Which project do you think ${state.selectedPerson.realName} built?`
+    : 'Which project do you think this person built?';
+  for(const project of PROJECTS){
+    const tint = projectAgents(project)[0].tint;
+    const card = buildFlipCard({
+      tint,
+      shape: project.shape,
+      frontLabel: project.name,
+      frontSub: 'TAP TO INSPECT',
+      backTitle: project.name,
+      backSub: `<span class="school-line">${escapeHtml(whoLabel(project))}</span>`,
+      confirmLabel: 'BEGIN DEBRIEF',
+      onConfirm: ()=> startGame(project)
+    });
+    el.appendChild(card);
+    if(state.selectedPerson){
+      try{
+        const done = await getMastery(project.id, state.selectedPerson.id);
+        if(done.length >= project.questions.length){
+          const tag = document.createElement('span');
+          tag.className = 'mastered-tag';
+          tag.textContent = 'MASTERED';
+          card.querySelector('.card-back').appendChild(tag);
+        }
+      }catch(e){}
+    }
+  }
+}
+
+/* ---- Game flow ---- */
+async function startGame(project){
+  if(state.triesLeft<=0) return;
+  await spendTry();
+  state.selectedProject = project;
+  state.questions = shuffle(project.questions).slice(0,5).map(q=>{
+    const opts = q.options.map((text,i)=>({text, isCorrect:i===q.correct}));
+    const shuffledOpts = shuffle(opts);
+    return {...q, shuffledOpts};
+  });
+  state.qIndex = 0; state.energy = 3; state.score = 0; state.results = [];
+  flash();
+  setTimeout(()=>{
+    showScreen('screen-game');
+    $('#game-track-label').textContent = project.name + ' · ' + whoLabel(project);
+    renderTrail(); renderEnergy(); renderQuestion();
+  }, 180);
+}
+
+function renderTrail(){
+  const el = $('#trail'); el.innerHTML='';
+  state.questions.forEach((q,i)=>{
+    const n = document.createElement('div');
+    let cls='node';
+    if(state.results[i]==='done') cls+=' done'; else if(state.results[i]==='fail') cls+=' fail'; else if(i===state.qIndex) cls+=' current';
+    n.className = cls;
+    n.textContent = state.results[i]==='done'?'✓':state.results[i]==='fail'?'✗':(i+1);
+    el.appendChild(n);
+  });
+}
+function renderEnergy(){
+  const el = $('#energy'); el.innerHTML='';
+  for(let i=0;i<3;i++){
+    const pip = document.createElement('span');
+    pip.className = 'power-pip' + (i<state.energy ? ' active' : ' spent');
+    el.appendChild(pip);
+  }
+}
+function renderQuestion(){
+  const q = state.questions[state.qIndex];
+  $('#q-week').textContent = q.week;
+  $('#q-text').textContent = q.text;
+  $('#feedback').textContent='';
+  const opts = $('#options'); opts.innerHTML='';
+  q.shuffledOpts.forEach((opt)=>{
+    const b = document.createElement('button');
+    b.className='opt'; b.textContent = opt.text;
+    b.addEventListener('click', ()=>answer(opt.isCorrect, b));
+    opts.appendChild(b);
+  });
+  renderTrail();
+}
+function answer(isCorrect, btnEl){
+  const q = state.questions[state.qIndex];
+  const buttons = $$('#options .opt');
+  buttons.forEach(b=>b.disabled=true);
+  btnEl.classList.add(isCorrect?'correct':'wrong');
+  if(!isCorrect){ const correctBtn = [...buttons].find((b,i)=>q.shuffledOpts[i].isCorrect); correctBtn.classList.add('correct'); }
+
+  if(isCorrect){ state.score += 20; state.results[state.qIndex]='done'; $('#feedback').textContent = '// CORRECT: ' + q.right; }
+  else{ state.energy = Math.max(0, state.energy-1); $('#feedback').textContent = '// INCORRECT: ' + q.wrong; state.results[state.qIndex]='fail'; renderEnergy(); }
+
+  setTimeout(()=>{
+    state.qIndex++;
+    if(state.qIndex>=state.questions.length){ endGame(); } else { renderQuestion(); }
+  }, 1500);
+}
+
+function renderLeadCapture(label, project, matched){
+  const el = $('#lead-capture');
+  el.innerHTML = `<form id="lead-form"><label for="lead-email">${escapeHtml(label)}</label><input class="nick" id="lead-email" type="email" placeholder="your@email.com" required><button class="btn btn-primary" type="submit">Send the intel</button><p class="note" id="lead-confirmation" aria-live="polite"></p></form>`;
+  $('#lead-form').addEventListener('submit', async event=>{
+    event.preventDefault();
+    const email = $('#lead-email').value.trim();
+    const submitted = await submitEmailLead(email, project.id, state.selectedPerson.id, matched);
+    $('#lead-confirmation').textContent = submitted ? 'Sent. Check your inbox soon.' : 'Signal dropped. Please try again.';
+  });
+}
+
+/* ---- Score count-up animation (visual only, doesn't touch state.score) ---- */
+function animateScoreCountUp(el, target, duration){
+  if(prefersReducedMotion()){ el.textContent = target + ' pts'; return; }
+  const start = performance.now();
+  function tick(now){
+    const p = Math.min(1, (now-start)/duration);
+    const eased = 1 - Math.pow(1-p, 3);
+    el.textContent = Math.round(eased*target) + ' pts';
+    if(p<1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ---- Crystal-shard burst (pure CSS/JS, respects reduced motion) ---- */
+function fireConfetti(container){
+  if(prefersReducedMotion()) return;
+  container.innerHTML = '';
+  const colors = ['#4FF3FF','#A26BFF','#FF3F9E','#57F0B0'];
+  for(let i=0;i<16;i++){
+    const piece = document.createElement('span');
+    piece.className = 'confetti-piece';
+    piece.style.background = colors[i % colors.length];
+    piece.style.filter = `drop-shadow(0 0 6px ${colors[i % colors.length]})`;
+    const angle = (Math.PI*2*i/16) + (Math.random()*0.4-0.2);
+    const dist = 70 + Math.random()*70;
+    piece.style.setProperty('--dx', (Math.cos(angle)*dist)+'px');
+    piece.style.setProperty('--dy', (Math.sin(angle)*dist - 20)+'px');
+    piece.style.setProperty('--rot', (Math.random()*360-180)+'deg');
+    piece.style.animationDelay = (Math.random()*0.15)+'s';
+    container.appendChild(piece);
+  }
+  setTimeout(()=>{ container.innerHTML=''; }, 1200);
+}
+
+async function endGame(){
+  const project = state.selectedProject;
+  const selectedPerson = state.selectedPerson;
+  const cleared = state.results.filter(r=>r==='done').length;
+  const matched = project.ownerAgentIds.includes(selectedPerson.id);
+  const quizPassed = cleared >= 3;
+  const ownerCodenames = projectAgents(project).map(agent=>agent.codename).join(' & ');
+
+  showScreen('screen-end');
+  renderAvatar($('#end-avatar-row'), project, {face:44});
+  $('#idbadge-track').textContent = project.name;
+  $('#score-big').textContent = '0 pts';
+  $('#reveal-unlocked').style.display = 'none';
+  $('#reveal-locked').style.display = 'none';
+  $('#info-grid').innerHTML = '';
+  $('#lead-capture').innerHTML = '';
+
+  const idbadgeEl = document.querySelector('.idbadge');
+  const statusEl = $('#idbadge-status');
+  idbadgeEl.classList.remove('verified','sealed');
+  statusEl.classList.remove('flash-highlight','glitch-flicker');
+
+  if(!quizPassed){
+    $('#idbadge-name').textContent = '??? Identity sealed';
+    statusEl.textContent = 'TRAIL COLD';
+    $('#end-badge').textContent = 'TRY AGAIN';
+    $('#grade-text').textContent = `Trail's gone cold. You got ${cleared}/5 right about ${project.name}. But every good agent needs a second pass. Want to try again?`;
+    idbadgeEl.classList.add('sealed');
+    statusEl.classList.add('glitch-flicker');
+  }else if(matched){
+    $('#idbadge-name').textContent = selectedPerson.realName;
+    statusEl.textContent = 'IDENTITY CONFIRMED';
+    $('#end-badge').textContent = 'NAILED IT';
+    $('#grade-text').textContent = `Nailed it. You got ${cleared}/5 right, and yes, ${selectedPerson.codename} IS the real ${selectedPerson.realName}, and this IS their project.`;
+    $('#reveal-unlocked').style.display = 'block';
+    $('#project-desc').textContent = project.reveal.desc;
+    const rows = [
+      ['REPOSITORY', project.reveal.githubUrl && project.reveal.githubUrl!=='#' ? `<a href="${project.reveal.githubUrl}" target="_blank" rel="noopener">View repository</a>` : 'To be added'],
+      ['LIVE DEMO', project.reveal.demoUrl && project.reveal.demoUrl!=='#' ? `<a href="${project.reveal.demoUrl}" target="_blank" rel="noopener">View demo</a>` : 'Link to be added by the organizer']
+    ];
+    $('#info-grid').innerHTML = rows.map(([k,v],i)=>`<div class="info-row" style="animation-delay:${1.0 + i*0.08}s;"><span class="k">${k}</span><span class="v">${v}</span></div>`).join('');
+    renderLeadCapture('Get the repo, the demo, and a bonus deliverable from the team', project, true);
+    idbadgeEl.classList.add('verified');
+    statusEl.classList.add('flash-highlight');
+  }else{
+    $('#idbadge-name').textContent = '??? Identity sealed';
+    statusEl.textContent = 'WRONG AGENT';
+    $('#end-badge').textContent = 'SOLID KNOWLEDGE';
+    $('#grade-text').textContent = `You got ${cleared}/5 right about ${project.name}. Solid knowledge, but it's not ${selectedPerson.codename}'s project. It actually belongs to ${ownerCodenames}.`;
+    renderLeadCapture("If you'd still like the deliverables, leave your email below", project, false);
+    idbadgeEl.classList.add('sealed');
+    statusEl.classList.add('glitch-flicker');
+  }
+
+  setTimeout(()=> animateScoreCountUp($('#score-big'), state.score, 700), 380);
+  if(quizPassed && matched){
+    setTimeout(()=> fireConfetti($('#confetti-burst')), 200);
+  }
+
+  const correctIds = state.results.map((r,i)=> r==='done' ? state.questions[i].id : null).filter(Boolean);
+  if(correctIds.length) await addMastery(project.id, selectedPerson.id, correctIds);
+  await maybeTriggerEgg();
+
+  const trailStr = state.results.map(r=> r==='done'?'#': r==='fail'?'x':'.').join('');
+  $('#share-box').textContent =
+`CLASSIFIED CASE REPORT: ${project.name}
+${trailStr}
+Score: ${state.score} pts · Status: ${quizPassed?'QUIZ CLEARED':'SEALED'}
+My cover is blown. Is yours?`;
+
+  $('#btn-copy').onclick = async ()=>{
+    const nick = $('#nick').value.trim();
+    try{ await navigator.clipboard.writeText($('#share-box').textContent); }catch(e){}
+    $('#btn-copy').textContent = 'Report copied';
+    const list = await submitScore(nick, project.name, state.score);
+    renderBoard($('#board-end'), list);
+    setTimeout(()=>{ $('#btn-copy').textContent='Copy mission report'; }, 1800);
+  };
+  loadLeaderboard('board-end');
+}
+
+/* ---- Nav ---- */
+$('#btn-back-people').addEventListener('click', ()=> showScreen('screen-people'));
+$('#btn-again').addEventListener('click', ()=>{
+  showScreen('screen-people');
+});
+
+/* ---- Init ---- */
+(async function init(){
+  await loadTries();
+  renderPeople();
+  await loadLeaderboard('board-people');
+})();
+</script>
+</body>
+</html>
