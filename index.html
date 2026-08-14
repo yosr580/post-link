@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Operation Mentor , Classified Agent Files · Talan</title>
+<title>Who's Behind The AI ?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -12,16 +12,20 @@
 
   :root{
     --void:#04060D; --void-2:#090E1C; --panel-solid:#0D1326;
-    --line:rgba(140,170,255,.16); --line-strong:rgba(150,180,255,.36);
+    --line:rgba(47,113,182,.18);
+    --line-strong:rgba(87,32,117,.42);
 
-    --cyan:#4FF3FF; --cyan-dim:rgba(79,243,255,.30);
-    --violet:#A26BFF; --violet-dim:rgba(162,107,255,.30);
-    --magenta:#FF3F9E; --magenta-dim:rgba(255,63,158,.30);
+    --cyan:#2F71B6; --cyan-dim:rgba(47,113,182,.30);
+    --violet:#572075; --violet-dim:rgba(87,32,117,.30);
+    --magenta:#D62577; --magenta-dim:rgba(214,37,119,.30);
+    --olive:#818E23;
+    --deepgreen:#0F552B;
     --success:#57F0B0; --danger:#FF4D6D;
 
     --ink:#EAF1FF; --text-dim:#8892BE; --text-faint:#5A6390;
 
     --gradient-neon:linear-gradient(120deg,var(--cyan),var(--violet) 52%,var(--magenta));
+    --gradient-title:linear-gradient(120deg,#5BA3E6,#8E4FB8 52%,#E75D9D);
     --gradient-panel:linear-gradient(165deg, rgba(24,30,54,.92), rgba(7,10,20,.90));
     --gradient-hero:
       radial-gradient(circle at 8% 0%, var(--cyan-dim) 0%, transparent 40%),
@@ -32,7 +36,7 @@
     --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
     --space-5:20px; --space-6:24px; --space-7:28px; --space-8:32px;
 
-    --shadow-soft:0 12px 30px -16px rgba(79,243,255,.35);
+    --shadow-soft:0 12px 30px -16px rgba(47,113,182,.35);
     --shadow-medium:0 24px 50px -26px rgba(0,0,0,.65);
     --shadow-strong:0 34px 70px -22px rgba(0,0,0,.75);
 
@@ -80,17 +84,18 @@
     display:inline-flex; align-items:center; gap:9px; color:var(--text-dim);
   }
   .eyebrow::before{content:""; width:9px; height:9px; background:var(--gradient-neon); clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%); box-shadow:0 0 10px var(--cyan);}
-  h1{font-family:var(--display); font-weight:800; font-size:clamp(27px,6vw,42px); line-height:1.08; margin:0 0 12px; letter-spacing:-.01em;
-    background:var(--gradient-neon); background-size:200% auto; background-clip:text; -webkit-background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
+  h1{font-family:var(--display); font-weight:800; font-size:clamp(34px,7vw,56px); line-height:1.08; margin:0 0 12px; letter-spacing:-.01em;
+    background:var(--gradient-title); background-size:200% auto; background-clip:text; -webkit-background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
     animation:textShimmer 7s ease-in-out infinite alternate;
+    text-shadow:0 0 18px rgba(255,255,255,.25), 0 0 42px rgba(47,113,182,.45);
   }
   @keyframes textShimmer{ from{background-position:0% center;} to{background-position:100% center;} }
   .lede{color:var(--text-dim); font-size:15.5px; line-height:1.65; max-width:60ch; margin:0 0 22px; position:relative;}
 
   .btn{font-family:var(--label); font-weight:700; font-size:14.5px; letter-spacing:.03em; text-transform:uppercase; border:none; --cut:9px; padding:13px 22px; cursor:pointer; transition:transform .15s var(--ease-spring), box-shadow .2s var(--ease-spring), filter .2s; display:inline-flex; align-items:center; gap:8px;}
   .btn:active{transform:scale(.97);}
-  .btn-primary{background:var(--gradient-neon); color:#03050C; box-shadow:0 0 0 1px rgba(255,255,255,.08) inset, 0 10px 26px -10px rgba(79,243,255,.55);}
-  .btn-primary:hover{transform:translateY(-2px); filter:brightness(1.08); box-shadow:0 0 0 1px rgba(255,255,255,.12) inset, 0 0 32px -4px rgba(162,107,255,.7);}
+  .btn-primary{background:var(--gradient-neon); color:#03050C; box-shadow:0 0 0 1px rgba(255,255,255,.08) inset, 0 10px 26px -10px rgba(47,113,182,.55);}
+  .btn-primary:hover{transform:translateY(-2px); filter:brightness(1.08); box-shadow:0 0 0 1px rgba(255,255,255,.12) inset, 0 0 32px -4px rgba(87,32,117,.7);}
   .btn-ghost{background:rgba(255,255,255,.03); color:var(--ink); border:1.5px solid var(--line-strong);}
   .btn-ghost:hover{border-color:var(--cyan); box-shadow:0 0 18px -6px var(--cyan-dim);}
   .btn:disabled{opacity:.35; cursor:not-allowed; box-shadow:none;}
@@ -227,7 +232,7 @@
   .q-week{font-family:var(--mono); font-size:11px; color:var(--cyan); text-transform:uppercase; letter-spacing:.14em; margin:0 0 8px; font-weight:600;}
   .q-text{font-family:var(--display); font-weight:700; font-size:18.5px; line-height:1.35; margin:0 0 16px; color:var(--ink);}
   .opt{display:block; width:100%; text-align:left; background:rgba(255,255,255,.03); border:1.5px solid var(--line); color:var(--ink); --cut:10px; clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut)); padding:12px 15px; margin-bottom:9px; font-family:var(--body); font-size:14px; cursor:pointer; transition:all .15s;}
-  .opt:hover:not(:disabled){border-color:var(--cyan); background:rgba(79,243,255,.06); box-shadow:0 0 16px -8px var(--cyan);}
+  .opt:hover:not(:disabled){border-color:var(--cyan); background:rgba(47,113,182,.06); box-shadow:0 0 16px -8px var(--cyan);}
   .opt.correct{background:rgba(87,240,176,.12); border-color:var(--success); color:var(--success); font-weight:600;}
   .opt.wrong{background:rgba(255,77,109,.12); border-color:var(--danger); color:var(--danger); font-weight:600;}
   .opt:disabled{cursor:default;}
@@ -243,7 +248,7 @@
   .idbadge-track{font-family:var(--mono); font-size:10.5px; color:var(--cyan); text-transform:uppercase; letter-spacing:.08em;}
 
   .reveal-card{background:var(--gradient-panel); --cut:22px; padding:24px 20px; text-align:center; border:1.5px solid var(--line-strong); box-shadow:var(--shadow-medium);}
-  .badge-pill{display:inline-block; font-family:var(--mono); font-size:11px; padding:5px 14px; --cut:8px; clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut)); background:rgba(79,243,255,.1); border:1px solid var(--cyan); color:var(--cyan); margin-bottom:8px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;}
+  .badge-pill{display:inline-block; font-family:var(--mono); font-size:11px; padding:5px 14px; --cut:8px; clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut)); background:rgba(47,113,182,.1); border:1px solid var(--cyan); color:var(--cyan); margin-bottom:8px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;}
   .score-big{font-family:var(--display); font-weight:800; font-size:40px; margin:4px 0; background:var(--gradient-neon); background-clip:text; -webkit-background-clip:text; color:transparent; -webkit-text-fill-color:transparent;}
 
   .reveal-seq > *{opacity:0; transform:translateY(10px); animation:seqIn .5s var(--ease-spring) forwards;}
@@ -260,8 +265,8 @@
   }
   .idbadge.sealed{animation:sealedPulse 1.8s ease-in-out 2;}
   @keyframes sealedPulse{
-    0%,100%{box-shadow:var(--shadow-strong), 0 0 0 0 rgba(255,63,158,.4);}
-    50%{box-shadow:var(--shadow-strong), 0 0 0 7px rgba(255,63,158,0);}
+    0%,100%{box-shadow:var(--shadow-strong), 0 0 0 0 rgba(214,37,119,.4);}
+    50%{box-shadow:var(--shadow-strong), 0 0 0 7px rgba(214,37,119,0);}
   }
   #idbadge-status.flash-highlight{ animation:statusFlash .8s ease .3s 1 both; }
   @keyframes statusFlash{ 0%{color:var(--text-dim);} 40%{color:var(--success); text-shadow:0 0 10px var(--success);} 100%{color:var(--text-dim);} }
@@ -288,7 +293,7 @@
   .egg-modal .icon{width:44px; height:44px; margin:0 auto 10px;}
   .egg-modal h2{font-family:var(--display); font-size:20px; margin:0 0 8px; color:var(--ink);}
   .egg-modal p{font-size:13.5px; color:var(--text-dim); line-height:1.6; margin:0 0 16px;}
-  .egg-gift{background:rgba(79,243,255,.08); border:1px solid var(--line); --cut:8px; clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut)); padding:12px 14px; font-size:13.5px; color:var(--ink); font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:10px; text-align:left;}
+  .egg-gift{background:rgba(47,113,182,.08); border:1px solid var(--line); --cut:8px; clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut)); padding:12px 14px; font-size:13.5px; color:var(--ink); font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:10px; text-align:left;}
 
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:.01ms !important; transition-duration:.01ms !important; animation-iteration-count:1 !important;}
@@ -299,6 +304,31 @@
     .share-box,#lead-capture{opacity:1;}
     .confetti-burst{display:none;}
     .idbadge.verified,.idbadge.sealed{animation:none;}
+  }
+
+  /* ===== Enhanced front page layout ===== */
+  #screen-people {
+    text-align: center;
+  }
+  #screen-people .eyebrow {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  #screen-people h1 {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 18ch;
+  }
+  #screen-people .lede {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 55ch;
+  }
+  #people-roster {
+    max-width: 720px;
+    gap: 24px;
+    margin-top: 40px;
   }
 </style>
 </head>
@@ -314,7 +344,7 @@
   <!-- PEOPLE LANDING -->
   <section class="screen active" id="screen-people">
     <p class="eyebrow">Classified Agent Bureau · Community Special Edition</p>
-    <h1>Whose project do you want to uncover?</h1>
+    <h1>Who's Behind The AI ?</h1>
     <p class="lede">Select an agent file, then guess which project is really theirs. Answer five questions to prove it.</p>
     <div class="roster" id="people-roster"></div>
     <p class="note">Clear 3 classified cases and a mystery drop unlocks. <span id="tries-left"></span></p>
@@ -444,15 +474,15 @@ const GIFT_POOL = [
 ];
 
 const PEOPLE = [
-  { id:'cipher', codename:'Agent Cipher', realName:'Ahmed Aziz Ammar', avatar:'avatars/ahmed.jpg', tint:'#4FF3FF', locked:false, school:'ESPRIT', linkedin:'https://www.linkedin.com/in/ahmed-aziz-ammar-b71590260/' },
-  { id:'nova', codename:'Agent Nova', realName:'Abir Ommezzine', avatar:'avatars/abir.jpg', tint:'#FF3F9E', locked:false, school:'ENSI', linkedin:'https://www.linkedin.com/in/abir-ommezzine-36b500327/' },
-  { id:'vertex', codename:'Agent Vertex', realName:'Mouhib Jridi', avatar:'avatars/mouhib.jpg', tint:'#4FF3FF', locked:false, school:'ENETCOM', linkedin:'https://www.linkedin.com/in/mouhib-jridi/' },
-  { id:'mirage', codename:'Agent Mirage', realName:'Yosr Jabloun', avatar:'avatars/yosr.jpg', tint:'#FF3F9E', locked:false, school:'ENIT', linkedin:'https://www.linkedin.com/in/yosr-jabloun-232421333/' },
-  { id:'pulse', codename:'Agent Pulse', realName:'Zaineb Mhedhbi', avatar:'avatars/zeyneb.jpg', tint:'#A26BFF', locked:false, school:'ENSI', linkedin:'https://www.linkedin.com/in/zeyneb-mhedhbi-285722375/' },
-  { id:'echo', codename:'Agent Echo', realName:'Maram Laouini', avatar:'avatars/maram.jpg', tint:'#4FF3FF', locked:false, school:'FST', linkedin:'https://www.linkedin.com/in/maram-laouini-133048336/' },
-  { id:'falcon', codename:'Agent Falcon', realName:'Samar Albouchi', avatar:'avatars/samar.png', tint:'#A26BFF', locked:false, school:'supcom', linkedin:'https://www.linkedin.com/in/samar-albouchi-bab194292/' },
-  { id:'quantum', codename:'Agent Quantum', realName:'Linda Baklouti', avatar:'avatars/linda.jpg', tint:'#FF3F9E', locked:false, school:'ESPRIT', linkedin:'https://www.linkedin.com/in/baklouti-linda-072643250/' },
-  { id:'ghost', codename:'Agent Ghost', realName:'Yassine Reggui', avatar:'avatars/yassine.jpg', tint:'#5A6390', locked:false, school:'ENSI', linkedin:'https://www.linkedin.com/in/mohamedyassine-reggui-848b423bb/' }
+  { id:'cipher', codename:'Agent Cipher', realName:'Ahmed Aziz Ammar', avatar:'avatars/ahmed.jpg', tint:'#2F71B6', locked:false, school:'ESPRIT', linkedin:'https://www.linkedin.com/in/ahmed-aziz-ammar-b71590260/' },
+  { id:'nova', codename:'Agent Nova', realName:'Abir Ommezzine', avatar:'avatars/abir.jpg', tint:'#D62577', locked:false, school:'ENSI', linkedin:'https://www.linkedin.com/in/abir-ommezzine-36b500327/' },
+  { id:'vertex', codename:'Agent Vertex', realName:'Mouhib Jridi', avatar:'avatars/mouhib.jpg', tint:'#2F71B6', locked:false, school:'ENETCOM', linkedin:'https://www.linkedin.com/in/mouhib-jridi/' },
+  { id:'mirage', codename:'Agent Mirage', realName:'Yosr Jabloun', avatar:'avatars/yosr.jpg', tint:'#D62577', locked:false, school:'ENIT', linkedin:'https://www.linkedin.com/in/yosr-jabloun-232421333/' },
+  { id:'pulse', codename:'Agent Pulse', realName:'Zaineb Mhedhbi', avatar:'avatars/zeyneb.jpg', tint:'#572075', locked:false, school:'ENSI', linkedin:'https://www.linkedin.com/in/zeyneb-mhedhbi-285722375/' },
+  { id:'echo', codename:'Agent Echo', realName:'Maram Laouini', avatar:'avatars/maram.jpg', tint:'#2F71B6', locked:false, school:'FST', linkedin:'https://www.linkedin.com/in/maram-laouini-133048336/' },
+  { id:'falcon', codename:'Agent Falcon', realName:'Samar Albouchi', avatar:'avatars/samar.png', tint:'#572075', locked:false, school:'supcom', linkedin:'https://www.linkedin.com/in/samar-albouchi-bab194292/' },
+  { id:'quantum', codename:'Agent Quantum', realName:'Linda Baklouti', avatar:'avatars/linda.jpg', tint:'#D62577', locked:false, school:'ESPRIT', linkedin:'https://www.linkedin.com/in/baklouti-linda-072643250/' },
+  { id:'ghost', codename:'Agent Ghost', realName:'Yassine Reggui', avatar:'avatars/yassine.jpg', tint:'#0F552B', locked:false, school:'ENSI', linkedin:'https://www.linkedin.com/in/mohamedyassine-reggui-848b423bb/' }
 ];
 
 const PROJECTS = [
@@ -632,7 +662,7 @@ function buildFlipCard({tint, shape, avatarUrl, avatarInitials, frontLabel, fron
   const card = document.createElement('div');
   card.className = 'flip-card' + (locked ? ' locked' : '') + (gallery ? ' agent-gallery' : '');
   card.tabIndex = locked ? -1 : 0;
-  card.style.setProperty('--tint', tint || '#4FF3FF');
+  card.style.setProperty('--tint', tint || '#2F71B6');
 
   const fx = (8 + Math.random()*12).toFixed(1) + 'px';
   const fy = (8 + Math.random()*12).toFixed(1) + 'px';
@@ -945,7 +975,7 @@ function animateScoreCountUp(el, target, duration){
 function fireConfetti(container){
   if(prefersReducedMotion()) return;
   container.innerHTML = '';
-  const colors = ['#4FF3FF','#A26BFF','#FF3F9E','#57F0B0'];
+  const colors = ['#2F71B6','#572075','#D62577','#818E23','#0F552B'];
   for(let i=0;i<16;i++){
     const piece = document.createElement('span');
     piece.className = 'confetti-piece';
