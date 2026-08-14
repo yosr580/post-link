@@ -453,7 +453,7 @@ const PEOPLE = [
 
 const PROJECTS = [
     {
-      id:'speckit-abir', name:'Spec Kit , Documentation Pipeline', shape:'hexagon', ownerAgentIds:['nova'],
+      id:'speckit-ahmed', name:'Spec Kit , Documentation Pipeline', shape:'hexagon', ownerAgentIds:['cipher'],
       questions:[
         {id:'sk1', week:'Week 1 — Discovery', text:"Picture a team whose project specs live scattered across a dozen markdown files nobody fully trusts anymore ... outdated, half-written, hard to turn into anything real. That's exactly the mess this project was built to clean up. In one sentence, what does it actually do?", options:["Turns messy, raw project notes into clean, trustworthy results without a lot of manual work","Replaces developers with a chatbot","Just backs up code to the cloud"], correct:0, wrong:"That's not really the gap this tool is trying to close.", right:"Exactly! turning rough notes into something the team can rely on, with less manual effort."},
         {id:'sk2', week:'Week 1 — Discovery', text:"Instead of one giant step that tries to do everything at once, the pipeline breaks the work into several small, focused stages ... some running one after another, others running side by side when they don't depend on each other. Why design it that way?", options:["Each step stays simple and independent, so mistakes are easy to spot and independent work can run in parallel to save time","It makes the process slower on purpose","So that only one step is ever allowed to run"], correct:0, wrong:"That's not the reasoning behind breaking the work into staged, sometimes-parallel steps.", right:"Right! small focused steps are easier to trust, and independent ones running together is free speed."},
@@ -466,12 +466,12 @@ const PROJECTS = [
       ],
       reveal:{
         name:'Spec Kit , Documentation Pipeline', desc:"A multi-agent pipeline (FastAPI and LangGraph), implemented by hand, that turns raw Markdown specs into certified deliverables , PDFs, diagrams, evaluations , complete with a real-time React monitoring dashboard.",
-        demoUrl:'#', githubUrl:'https://github.com/abir-ommezzine/extension-github-spec-kit',
+        demoUrl:'#', githubUrl:'https://github.com/ahmed200346/Extension_GithubSpecKit',
         school:'School to be confirmed', linkedin:'#', email:'contact-a-renseigner@example.com'
       }
     },
     {
-      id:'speckit-ahmed', name:'Spec Kit , Project and Ticket Agent', shape:'spark', ownerAgentIds:['cipher'],
+      id:'speckit-abir', name:'Spec Kit , Project and Ticket Agent', shape:'spark', ownerAgentIds:['nova'],
       questions:[
         {id:'sa-a1', week:'Week 1 — Discovery', text:"Imagine installing a code-editor extension that doesn't just turn your notes into documents... it also quietly keeps a live project board in sync with what your team is really building. What's the one thing this extension adds on top of just generating documents?", options:["A live, automatic sync between what's actually being built and a Kanban-style ticket board, like a built-in project manager","A way to compile code faster","A tool that only counts lines of code"], correct:0, wrong:"That's not the core thing this extension adds.", right:"Exactly ! it behaves less like a doc generator and more like an autonomous project manager."},
         {id:'sa-a2', week:'Week 1 — Discovery', text:"Every time a spec document changes, this extension re-checks its quality metrics (KPIs) on the spot, instead of waiting for a human to review it later. Why bother automating that?", options:["So quality metrics update themselves the moment a document changes, instead of drifting out of date","Because KPIs are legally required for every software spec","Because it removes the need for the document itself"], correct:0, wrong:"That's not the reasoning behind automating the KPI analysis.", right:"Right ! metrics that update themselves never go stale between reviews."},
@@ -484,7 +484,7 @@ const PROJECTS = [
       ],
       reveal:{
         name:'Spec Kit , Project and Ticket Agent', desc:"A purpose-built extension for the GitHub Spec Kit ecosystem that automates spec generation, KPI analysis, and database versioning , soon evolving with an autonomous, JIRA-style project and ticket management agent.",
-        demoUrl:'#', githubUrl:'https://github.com/ahmed200346/Extension_GithubSpecKit',
+        demoUrl:'#', githubUrl:'https://github.com/abir-ommezzine/extension-github-spec-kit',
         school:'School to be confirmed', linkedin:'#', email:'contact-a-renseigner@example.com'
       }
     },
