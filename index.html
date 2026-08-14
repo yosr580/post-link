@@ -98,6 +98,9 @@
     outline:2.5px solid var(--cyan); outline-offset:3px;
   }
 
+  #site-logo{position:fixed; top:16px; left:16px; height:42px; z-index:50; filter:drop-shadow(0 2px 10px rgba(0,0,0,.5));}
+  #site-logo img{height:100%; width:auto; display:block;}
+
   #decor{position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden;}
   #decor span{position:absolute; width:12px; height:12px; opacity:.4; clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
     background:var(--gradient-neon); filter:drop-shadow(0 0 8px var(--violet)); animation:shardFly 16s ease-in-out infinite;}
@@ -300,6 +303,7 @@
 </style>
 </head>
 <body>
+<div id="site-logo"><img src="talan-logo (1).png" alt="Talan"></div>
 <div id="decor" aria-hidden="true">
   <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
 </div>
