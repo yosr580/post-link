@@ -440,11 +440,12 @@ const AGENT_EMAILS = {
   quantum: 'baklouti.linda@esprit.tn',
   ghost:   'mohamedyassine.reggui@ensi-uma.tn'
 };
+const DELIVERABLES_CC_EMAIL = 'racha.friji@talan.com';
 function buildDeliverablesComposeUrl(project){
   const to = project.ownerAgentIds.map(id=>AGENT_EMAILS[id]).filter(Boolean).join(',');
   const subject = encodeURIComponent(`Request: deliverables for ${project.name}`);
-  const body = encodeURIComponent(`Hello,\n\nI just went through the "${project.name}" mission in Operation Mentor and would love to receive the deliverables (repository, demo, and any other resources) for this project.\n\nThanks!`);
-  return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${subject}&body=${body}`;
+  const body = encodeURIComponent(`Hello,\n\nI just went through the "${project.name}" mission in Who'sBehind the AI and would love to receive the deliverables (repository, demo, and any other resources) for this project.\n\nThanks!`);
+  return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&cc=${encodeURIComponent(DELIVERABLES_CC_EMAIL)}&su=${subject}&body=${body}`;
 }
 function renderDeliverablesRequest(project){
   const el = $('#lead-capture');
